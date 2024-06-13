@@ -6,13 +6,14 @@ import {
   getAllPurchasesFromOneEmployed,
   getAllPurchasesFromRange,
 } from "../controllers/purchaseController.js";
+import checkToken from "../middleware/checkToken.js";
 
 const router = express.Router();
 
-router.get("/", getAllPurchases);
-router.get("/client/:dni", getAllPurchasesFromOneClient);
-router.get("/employed/:dni", getAllPurchasesFromOneEmployed);
-router.get("/:from/:to", getAllPurchasesFromRange);
-router.post("/", addPurchase);
+router.get("/", checkToken, getAllPurchases);
+router.get("/client/:dni", checkToken, getAllPurchasesFromOneClient);
+router.get("/employed/:dni", checkToken, getAllPurchasesFromOneEmployed);
+router.get("/:from/:to", checkToken, getAllPurchasesFromRange);
+router.post("/", checkToken, addPurchase);
 
 export default router;

@@ -1,11 +1,15 @@
 import clients from "../model/Client.js";
 import employeds from "../model/Employed.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import {
   passwordEmployedSchema,
   dniEmployedSchema,
 } from "../schemas/employedSchema.js";
 import { dniClientSchema } from "../schemas/clientSchema.js";
+
+dotenv.config();
 
 async function checkPassword(CorrectPassword, inputPassword) {
   const match = await bcrypt.compare(inputPassword, CorrectPassword);
@@ -22,7 +26,10 @@ export const loginClient = async (req, res) => {
       let data = await clients.getOneClient(dni);
 
       if (data) {
-        res.status(200).json(data);
+        const token = jwt.sign({ dni }, process.env.JWT_KEY, {
+          expiresIn: "30m",
+        });
+        res.status(200).json({ token });
       } else {
         res.status(200).json({});
       }
@@ -56,7 +63,10 @@ export const loginEmployed = async (req, res) => {
 
       if (match) {
         data = await employeds.getOneEmployed(dni);
-        res.status(200).json(data);
+        const token = jwt.sign({ dni }, process.env.JWT_KEY, {
+          expiresIn: "30m",
+        });
+        res.status(200).json({ token });
       } else {
         res.status(200).json({});
       }

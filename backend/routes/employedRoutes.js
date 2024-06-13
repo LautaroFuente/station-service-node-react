@@ -4,11 +4,12 @@ import {
   getOneEmployed,
   addEmployed,
 } from "../controllers/employedController.js";
+import checkToken from "../middleware/checkToken.js";
 
 const router = express.Router();
 
-router.get("/", getAllEmployeds);
-router.get("/:dni", getOneEmployed);
-router.post("/", addEmployed);
+router.get("/", checkToken, getAllEmployeds);
+router.get("/:dni", checkToken, getOneEmployed);
+router.post("/", checkToken, addEmployed);
 
 export default router;
