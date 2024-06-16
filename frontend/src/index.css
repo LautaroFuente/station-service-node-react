@@ -31,6 +31,79 @@ a {
   flex: 1;
 }
 
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 60%;
+  margin: 3rem auto;
+  gap: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background-color: rgb(59 72 249);
+  color: rgb(255, 255, 255);
+  max-width: 900px;
+  min-width: 200px;
+  width: 60%;
+  margin: 3rem auto;
+  padding: 2rem 0;
+  border: solid 2px rgb(93 93 93);
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+form label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+form input {
+  width: 50%;
+  min-width: 170px;
+  max-width: 400px;
+  height: 2rem;
+  font-size: 1.3rem;
+  border: solid 2px rgb(93 93 93);
+}
+
+form .submit {
+  width: 50%;
+  min-width: 170px;
+  max-width: 400px;
+  height: 2rem;
+  font-size: 1.3rem;
+  border: solid 2px rgb(93 93 93);
+}
+
+form .submit:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.grid-item {
+  font-size: 1.3rem;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(59 72 249);
+  border: solid 2px rgb(93 93 93);
+  max-width: 300px;
+}
+
+.grid-item:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -44,10 +117,18 @@ a {
   width: 4rem;
 }
 
+h1 {
+  text-align: center;
+}
+
 /* Media */
 
 @media (min-width: 650px) {
   .btn {
     width: 50%;
+  }
+
+  .container-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
