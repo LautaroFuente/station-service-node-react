@@ -34,9 +34,19 @@ a {
 .container-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
+  justify-items: center;
   width: 60%;
   margin: 3rem auto;
   gap: 2rem;
+}
+
+.display {
+  width: 60%;
+  height: 3.5rem;
+  border-radius: 3px;
+  border: solid 2px rgb(93 93 93);
+  background-color: rgb(213 213 213);
+  margin: 1rem auto;
 }
 
 form {
@@ -90,18 +100,56 @@ form .submit:hover {
   opacity: 0.8;
 }
 
+#grid-delete {
+  background-color: rgb(231, 131, 131);
+  grid-column: span 2;
+}
+
 .grid-item {
   font-size: 1.3rem;
   text-align: center;
-  color: rgb(255, 255, 255);
-  background-color: rgb(59 72 249);
+  color: rgb(0 0 0);
+  background-color: rgb(213 213 213);
   border: solid 2px rgb(93 93 93);
   max-width: 300px;
+  font-weight: bold;
+  width: 100%;
 }
 
 .grid-item:hover {
   cursor: pointer;
   opacity: 0.8;
+  background-color: rgb(103, 103, 212);
+}
+
+.grid-item img {
+  width: 4rem;
+}
+
+.grid-number {
+  background-color: rgb(163 163 163);
+  border-radius: 4px;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  min-width: 2rem;
+}
+
+.grid-number:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.grid-numeric {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  width: 60%;
+  margin: 3rem auto;
+  gap: 2rem;
 }
 
 .header {
