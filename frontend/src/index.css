@@ -165,7 +165,8 @@ form .submit:hover {
   width: 4rem;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
 }
 
