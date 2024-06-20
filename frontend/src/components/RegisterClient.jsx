@@ -1,4 +1,8 @@
 import { useForm } from "../hooks/useForm";
+import { validateNewClient } from "../helpers/validateNewClient";
+import ErrorMessage from "./ErrorMessage";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegisterClient() {
   const initialForm = {
@@ -8,30 +12,54 @@ function RegisterClient() {
     age: "",
   };
 
-  const { form, handleInputChange, resetForm } = useForm(initialForm);
+  const [formErrorServer, setFormErrorServer] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    form,
+    errorForm,
+    handleInputChange,
+    handleErrorForm,
+    resetForm,
+    resetErrorForm,
+  } = useForm(initialForm);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:3000/server/clients/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+    const result = validateNewClient(form);
+    if (result.success) {
+      try {
+        console.log(`Validacion correcta`);
+        const response = await fetch("http://localhost:3000/server/clients/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
 
-      if (!response.ok) {
-        throw new Error("Error al agregar");
+        if (!response.ok) {
+          throw new Error("Error al agregar");
+        }
+
+        const data = await response.json();
+        console.log("Agregado con exito:", data);
+        resetForm();
+        resetErrorForm();
+        navigate("/login-client");
+      } catch (error) {
+        console.error("Error:", error);
+        resetForm();
+        resetErrorForm();
+        setFormErrorServer(true);
       }
-
-      const data = await response.json();
-      console.log("Agregado con exito:", data);
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      console.log(`Falla validacion `);
+      const errors = result.error.errors;
+      errors.forEach((error) => {
+        handleErrorForm(error.path, error.message);
+      });
     }
-
-    resetForm;
   };
 
   return (
@@ -48,6 +76,9 @@ function RegisterClient() {
             onChange={handleInputChange}
             required
           />
+          {errorForm.name && (
+            <ErrorMessage message={errorForm.name}></ErrorMessage>
+          )}
         </div>
         <div>
           <label htmlFor="last_name">Apellido:</label>
@@ -59,6 +90,9 @@ function RegisterClient() {
             onChange={handleInputChange}
             required
           />
+          {errorForm.last_name && (
+            <ErrorMessage message={errorForm.last_name}></ErrorMessage>
+          )}
         </div>
         <div>
           <label htmlFor="dni">DNI:</label>
@@ -70,6 +104,9 @@ function RegisterClient() {
             onChange={handleInputChange}
             required
           />
+          {errorForm.dni && (
+            <ErrorMessage message={errorForm.dni}></ErrorMessage>
+          )}
         </div>
         <div>
           <label htmlFor="age">Edad:</label>
@@ -81,11 +118,17 @@ function RegisterClient() {
             onChange={handleInputChange}
             required
           />
+          {errorForm.age && (
+            <ErrorMessage message={errorForm.age}></ErrorMessage>
+          )}
         </div>
         <button type="submit" className="submit">
           Registrarse
         </button>
       </form>
+      {formErrorServer && (
+        <ErrorMessage message="Error con el servidor"></ErrorMessage>
+      )}
     </>
   );
 }
