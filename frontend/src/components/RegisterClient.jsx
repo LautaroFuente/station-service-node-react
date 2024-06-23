@@ -1,17 +1,17 @@
 import { useForm } from "../hooks/useForm";
-import { validateNewClient } from "../helpers/validateNewClient";
+import { validateNewClient } from "../helpers/validateFormData";
 import ErrorMessage from "./ErrorMessage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function RegisterClient() {
-  const initialForm = {
-    name: "",
-    last_name: "",
-    dni: "",
-    age: "",
-  };
+const initialForm = {
+  name: "",
+  last_name: "",
+  dni: "",
+  age: "",
+};
 
+function RegisterClient() {
   const [formErrorServer, setFormErrorServer] = useState(false);
   const navigate = useNavigate();
 

@@ -25,13 +25,14 @@ export const loginClient = async (req, res) => {
       console.log("Validacion correcta");
       let data = await clients.getOneClient(dni);
 
-      if (data) {
+      if (data.length > 0) {
         const token = jwt.sign({ dni }, process.env.JWT_KEY, {
           expiresIn: "30m",
         });
+        console.log(data);
         res.status(200).json({ token });
       } else {
-        res.status(200).json({});
+        res.status(200).json({ error: "Cliente no registrado" });
       }
     } else {
       console.error("Errores de validacion", result.error.errors);
