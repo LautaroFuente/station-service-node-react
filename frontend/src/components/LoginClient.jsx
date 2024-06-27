@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { validateExistClient } from "../helpers/validateFormData";
 import { useForm } from "../hooks/useForm";
 import ErrorMessage from "./ErrorMessage";
+import { useNavigate } from "react-router-dom";
+import { ClientContext } from "../contexts/ClientContext";
+import { NavLink } from "react-router-dom";
 
 const initialForm = { dni: "" };
 
 function LoginClient() {
   const [formErrorServer, setFormErrorServer] = useState(false);
+  const [clientNotRegistered, setClientNotRegistered] = useState({
+    state: false,
+    message: "",
+  });
+  const { setClient } = useContext(ClientContext);
+
+  const navigate = useNavigate();
 
   const {
     form,
@@ -23,7 +33,7 @@ function LoginClient() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetch(
+        let response = await fetch(
           "http://localhost:3000/server/auth/login-client",
           {
             method: "POST",
@@ -38,11 +48,19 @@ function LoginClient() {
           throw new Error("Error al iniciar sesion");
         }
 
-        const data = await response.json();
-        if (data.error) {
-          console.log(data.error);
+        response = await response.json();
+        const { token, data } = response;
+        if (response.error) {
+          setClientNotRegistered({ state: true, message: response.error });
         } else {
           console.log("Inicio de sesion exitoso");
+          setClient({
+            name: data[0].name,
+            last_name: data[0].last_name,
+            dni: data[0].dni,
+            token,
+          });
+          navigate("/pump");
         }
         resetForm();
         resetErrorForm();
@@ -64,6 +82,9 @@ function LoginClient() {
   return (
     <>
       <h1>¡INICIA SESIÓN COMO CLIENTE!</h1>
+      {clientNotRegistered.state && (
+        <ErrorMessage message={clientNotRegistered.message}></ErrorMessage>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="dni">DNI:</label>
@@ -86,6 +107,9 @@ function LoginClient() {
       {formErrorServer && (
         <ErrorMessage message="Error con el servidor"></ErrorMessage>
       )}
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

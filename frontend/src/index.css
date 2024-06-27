@@ -12,6 +12,22 @@ a {
   padding: 0;
 }
 
+.btn-back-home {
+  width: 30%;
+  min-width: 170px;
+  max-width: 300px;
+  height: 2rem;
+  font-size: 1.3rem;
+  border: solid 2px rgb(27 36 83);
+  background-color: rgb(59 72 249);
+  color: #f7f3f3;
+}
+
+.btn-back-home:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 .btn img {
   width: 3rem;
   height: auto;

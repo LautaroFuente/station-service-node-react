@@ -30,7 +30,7 @@ export const loginClient = async (req, res) => {
           expiresIn: "30m",
         });
         console.log(data);
-        res.status(200).json({ token });
+        res.status(200).json({ token, data });
       } else {
         res.status(200).json({ error: "Cliente no registrado" });
       }

@@ -2,6 +2,7 @@ import PhotoProduct from "../img/product.png";
 import PhotoPumpFuel from "../img/fuel-pump.png";
 import PhotoPayMethod from "../img/pay-method.png";
 import PhotoQuantity from "../img/quantity.png";
+import { NavLink } from "react-router-dom";
 
 function OrderDescription() {
   return (
@@ -34,6 +35,9 @@ function OrderDescription() {
           </div>
         </div>
       </div>
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

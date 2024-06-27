@@ -1,8 +1,13 @@
+import { NavLink } from "react-router-dom";
+
 function LoginEmployed() {
+  const handleSubmit = () => {
+    console.log("Enviando");
+  };
   return (
     <>
       <h1>¡INICIA SESION COMO EMPLEADO!</h1>
-      <form onSubmit={{}}>
+      <form onSubmit={{ handleSubmit }}>
         <div>
           <label htmlFor="dni">DNI:</label>
           <input type="text" id="dni" name="dni" required />
@@ -15,6 +20,9 @@ function LoginEmployed() {
           Identificarse
         </button>
       </form>
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { validateNewClient } from "../helpers/validateFormData";
 import ErrorMessage from "./ErrorMessage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const initialForm = {
   name: "",
@@ -129,6 +130,9 @@ function RegisterClient() {
       {formErrorServer && (
         <ErrorMessage message="Error con el servidor"></ErrorMessage>
       )}
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

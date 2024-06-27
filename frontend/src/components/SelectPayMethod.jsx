@@ -1,5 +1,6 @@
 import PhotoCard from "../img/credit-card.png";
 import PhotoCash from "../img/cash.png";
+import { NavLink } from "react-router-dom";
 
 function SelectPayMethod() {
   return (
@@ -19,6 +20,9 @@ function SelectPayMethod() {
           </div>
         </div>
       </div>
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

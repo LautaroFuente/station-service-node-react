@@ -1,4 +1,5 @@
 import PhotoProduct from "../img/product.png";
+import { NavLink } from "react-router-dom";
 
 function SelectFuelProduct() {
   return (
@@ -30,6 +31,9 @@ function SelectFuelProduct() {
           </div>
         </div>
       </div>
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }

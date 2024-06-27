@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function EnterAmount() {
   return (
     <>
@@ -18,6 +20,9 @@ function EnterAmount() {
           Borrar
         </div>
       </div>
+      <NavLink to={"/"}>
+        <button className="btn-back-home">Volver al inicio</button>
+      </NavLink>
     </>
   );
 }
