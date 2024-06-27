@@ -1,12 +1,13 @@
 import cursor from "../img/cursor.png";
 import red_button from "../img/red-button.png";
+import { NavLink } from "react-router-dom";
 
 function Home() {
   return (
     <>
       <div className="container-content">
         <button className="btn">
-          <a href="/register-client">
+          <NavLink to={"/register-client"}>
             <div
               style={{
                 display: "flex",
@@ -18,11 +19,11 @@ function Home() {
               <p>Pulsa aquí!</p>
             </div>
             <img src={cursor} alt="icono de cursor" />
-          </a>
+          </NavLink>
         </button>
 
         <button className="btn">
-          <a href="/login-client">
+          <NavLink to={"/login-client"}>
             <div
               style={{
                 display: "flex",
@@ -34,14 +35,14 @@ function Home() {
               <p>Pulsa aquí!</p>
             </div>
             <img src={cursor} alt="icono de cursor" />
-          </a>
+          </NavLink>
         </button>
 
         <button className="btn btn-red">
-          <a href="/login-employed">
+          <NavLink to={"/login-employed"}>
             <h4>Identificarse como empleado</h4>
             <img src={red_button} alt="icono de boton rojo" />
-          </a>
+          </NavLink>
         </button>
       </div>
     </>

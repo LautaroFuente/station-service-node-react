@@ -130,9 +130,11 @@ function RegisterClient() {
       {formErrorServer && (
         <ErrorMessage message="Error con el servidor"></ErrorMessage>
       )}
-      <NavLink to={"/"}>
-        <button className="btn-back-home">Volver al inicio</button>
-      </NavLink>
+      <div className="container-content">
+        <NavLink to={"/"}>
+          <button className="btn-back-home">Volver al inicio</button>
+        </NavLink>
+      </div>
     </>
   );
 }

@@ -55,6 +55,7 @@ function LoginClient() {
         } else {
           console.log("Inicio de sesion exitoso");
           setClient({
+            client_id: data[0].client_id,
             name: data[0].name,
             last_name: data[0].last_name,
             dni: data[0].dni,
@@ -107,9 +108,11 @@ function LoginClient() {
       {formErrorServer && (
         <ErrorMessage message="Error con el servidor"></ErrorMessage>
       )}
-      <NavLink to={"/"}>
-        <button className="btn-back-home">Volver al inicio</button>
-      </NavLink>
+      <div className="container-content">
+        <NavLink to={"/"}>
+          <button className="btn-back-home">Volver al inicio</button>
+        </NavLink>
+      </div>
     </>
   );
 }

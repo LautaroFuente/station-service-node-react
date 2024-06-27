@@ -20,9 +20,11 @@ function LoginEmployed() {
           Identificarse
         </button>
       </form>
-      <NavLink to={"/"}>
-        <button className="btn-back-home">Volver al inicio</button>
-      </NavLink>
+      <div className="container-content">
+        <NavLink to={"/"}>
+          <button className="btn-back-home">Volver al inicio</button>
+        </NavLink>
+      </div>
     </>
   );
 }
