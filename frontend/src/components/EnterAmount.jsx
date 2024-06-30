@@ -14,6 +14,7 @@ function EnterAmount() {
   const handleClickSubmit = (amount) => {
     const amountNumber = Number(amount);
     setPurchase({
+      ...purchase,
       description: {
         ...purchase.description,
         total: `Costo ${amountNumber}`,

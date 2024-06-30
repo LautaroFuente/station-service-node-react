@@ -14,6 +14,7 @@ function SelectPayMethod() {
 
   const handleClick = (method) => {
     setPurchase({
+      ...purchase,
       description: {
         ...purchase.description,
         metodo_pago: `Metodo de pago ${method}`,

@@ -13,8 +13,12 @@ const initialClient = {
 export const ClientProvider = ({ children }) => {
   const [client, setClient] = useState(initialClient);
 
+  const resetClient = () => {
+    setClient(initialClient);
+  };
+
   return (
-    <ClientContext.Provider value={{ client, setClient }}>
+    <ClientContext.Provider value={{ client, setClient, resetClient }}>
       {children}
     </ClientContext.Provider>
   );

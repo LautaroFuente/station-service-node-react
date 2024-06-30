@@ -6,11 +6,56 @@ import { NavLink } from "react-router-dom";
 import { PurchaseContext } from "../contexts/PurchaseContext";
 import { ClientContext } from "../contexts/ClientContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import ErrorMessage from "./ErrorMessage";
 
 function OrderDescription() {
-  const { purchase } = useContext(PurchaseContext);
-  const { client } = useContext(ClientContext);
+  const { purchase, resetPurchase } = useContext(PurchaseContext);
+  const { client, resetClient } = useContext(ClientContext);
   const { name, last_name, token } = client;
+  const navigate = useNavigate();
+
+  const [formErrorServer, setFormErrorServer] = useState(false);
+
+  const fetchPurchase = async () => {
+    let dataPurchase = {
+      client: purchase.client,
+      employed: purchase.employed,
+      purchase_date: purchase.purchase_date,
+      description: `${purchase.description.surtidor}, ${purchase.description.producto}, ${purchase.description.metodo_pago}, ${purchase.description.total}, ${purchase.description.litros}`,
+      total_amount: purchase.total_amount,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/server/purchases/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataPurchase),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al agregar");
+      }
+      const data = await response.json();
+      console.log("Agregado con exito:", data);
+    } catch (error) {
+      console.error("Error:", error);
+      setFormErrorServer(true);
+    }
+  };
+
+  const handleClickSubmit = () => {
+    console.log(purchase);
+    console.log("Fin Compra");
+    fetchPurchase();
+    resetClient();
+    resetPurchase();
+    navigate("/");
+  };
 
   return (
     <>
@@ -45,7 +90,13 @@ function OrderDescription() {
             </div>
           </div>
           <h2>{`${purchase.description.total} a nombre de ${name} ${last_name}`}</h2>
+          {formErrorServer && (
+            <ErrorMessage message="Error con el servidor"></ErrorMessage>
+          )}
           <div className="container-content">
+            <button className="btn-accept" onClick={handleClickSubmit}>
+              Aceptar compra y finalizar
+            </button>
             <NavLink to={"/"}>
               <button className="btn-back-home">Volver al inicio</button>
             </NavLink>

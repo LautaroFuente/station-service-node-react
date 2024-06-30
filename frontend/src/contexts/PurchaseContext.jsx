@@ -19,8 +19,12 @@ const initialPurchase = {
 export const PurchaseProvider = ({ children }) => {
   const [purchase, setPurchase] = useState(initialPurchase);
 
+  const resetPurchase = () => {
+    setPurchase(initialPurchase);
+  };
+
   return (
-    <PurchaseContext.Provider value={{ purchase, setPurchase }}>
+    <PurchaseContext.Provider value={{ purchase, setPurchase, resetPurchase }}>
       {children}
     </PurchaseContext.Provider>
   );

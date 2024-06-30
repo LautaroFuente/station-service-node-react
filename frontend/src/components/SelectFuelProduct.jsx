@@ -13,6 +13,7 @@ function SelectFuelProduct() {
 
   const handleClick = (product) => {
     setPurchase({
+      ...purchase,
       description: { ...purchase.description, producto: `Producto ${product}` },
     });
     navigate("/pay");

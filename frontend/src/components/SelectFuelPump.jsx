@@ -15,6 +15,7 @@ function SelectFuelPump() {
   const handleClick = (num) => {
     const date = createDate();
     setPurchase({
+      ...purchase,
       client: client_id,
       employed: 1,
       purchase_date: date,
