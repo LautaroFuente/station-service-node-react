@@ -1,6 +1,7 @@
 import { clientSchema, dniClientSchema } from "../schemas/clientSchema.js";
+import { passwordAndDniEmployedSchema } from "../schemas/employedSchema.js";
 
-export const validateNewClient = (data) => {
+export const validateNewClientData = (data) => {
   let { name, last_name, dni, age } = data;
 
   dni = Number(dni);
@@ -14,11 +15,20 @@ export const validateNewClient = (data) => {
   return result;
 };
 
-export const validateExistClient = (data) => {
+export const validateLoguinClientData = (data) => {
   let { dni } = data;
   dni = Number(dni);
 
   const result = dniClientSchema.safeParse({ dni });
+
+  return result;
+};
+
+export const validateLoguinEmployedData = (data) => {
+  let { dni, password } = data;
+  dni = Number(dni);
+
+  const result = passwordAndDniEmployedSchema.safeParse({ dni, password });
 
   return result;
 };

@@ -25,3 +25,8 @@ export const dniEmployedSchema = employedSchema.pick({
 export const passwordEmployedSchema = employedSchema.pick({
   employed_password: true,
 });
+
+export const passwordAndDniEmployedSchema = employedSchema.pick({
+  dni: true,
+  employed_password: true,
+});

@@ -55,7 +55,7 @@ export const loginEmployed = async (req, res) => {
       console.log("Validacion correcta");
       let data = await employeds.getOneEmployedPass(dni);
       if (data.length === 0) {
-        return res.status(200).json({});
+        return res.status(200).json({ error: "Empleado no registrado" });
       }
       const match = await checkPassword(
         data[0].employed_password,
@@ -67,9 +67,9 @@ export const loginEmployed = async (req, res) => {
         const token = jwt.sign({ dni }, process.env.JWT_KEY, {
           expiresIn: "30m",
         });
-        res.status(200).json({ token });
+        res.status(200).json({ token, data });
       } else {
-        res.status(200).json({});
+        res.status(200).json({ error: "Contraseña incorrecta" });
       }
     } else {
       console.error("Errores de validacion");

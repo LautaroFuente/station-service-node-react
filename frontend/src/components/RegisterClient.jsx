@@ -1,5 +1,5 @@
 import { useForm } from "../hooks/useForm";
-import { validateNewClient } from "../helpers/validateFormData";
+import { validateNewClientData } from "../helpers/validateFormData";
 import ErrorMessage from "./ErrorMessage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ function RegisterClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = validateNewClient(form);
+    const result = validateNewClientData(form);
     if (result.success) {
       try {
         console.log(`Validacion correcta`);

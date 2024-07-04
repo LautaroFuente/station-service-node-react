@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { validateExistClient } from "../helpers/validateFormData";
+import { validateLoguinClientData } from "../helpers/validateFormData";
 import { useForm } from "../hooks/useForm";
 import ErrorMessage from "./ErrorMessage";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ function LoginClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = validateExistClient(form);
+    const result = validateLoguinClientData(form);
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
