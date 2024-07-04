@@ -25,10 +25,13 @@ export const validateLoguinClientData = (data) => {
 };
 
 export const validateLoguinEmployedData = (data) => {
-  let { dni, password } = data;
+  let { dni, employed_password } = data;
   dni = Number(dni);
 
-  const result = passwordAndDniEmployedSchema.safeParse({ dni, password });
+  const result = passwordAndDniEmployedSchema.safeParse({
+    dni,
+    employed_password,
+  });
 
   return result;
 };

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { validateLoguinEmployedData } from "../helpers/validateFormData";
 
-const initialForm = { dni: "", password: "" };
+const initialForm = { dni: "", employed_password: "" };
 
 function LoginEmployed() {
   const [formErrorServer, setFormErrorServer] = useState(false);
@@ -29,6 +29,12 @@ function LoginEmployed() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    resetErrorForm();
+    setFormErrorServer(false);
+    setEmployedNotRegistered({
+      state: false,
+      message: "",
+    });
     const result = validateLoguinEmployedData(form);
     if (result.success) {
       try {
@@ -75,6 +81,9 @@ function LoginEmployed() {
       console.log(`Falla validacion `);
       const errors = result.error.errors;
       errors.forEach((error) => {
+        if (error.message === "Expected number, received nan") {
+          error.message = "El dni debe ser un numero";
+        }
         handleErrorForm(error.path, error.message);
       });
     }
@@ -85,17 +94,29 @@ function LoginEmployed() {
       {employedNotRegistered.state && (
         <ErrorMessage message={employedNotRegistered.message}></ErrorMessage>
       )}
-      <form onSubmit={{ handleSubmit }}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="dni">DNI:</label>
-          <input type="text" id="dni" name="dni" required />
+          <input
+            type="text"
+            id="dni"
+            name="dni"
+            required
+            onChange={handleInputChange}
+          />
           {errorForm.dni && (
             <ErrorMessage message={errorForm.dni}></ErrorMessage>
           )}
         </div>
         <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input type="text" id="password" name="password" required />
+          <label htmlFor="employed_password">Contraseña:</label>
+          <input
+            type="password"
+            id="employed_password"
+            name="employed_password"
+            required
+            onChange={handleInputChange}
+          />
           {errorForm.password && (
             <ErrorMessage message={errorForm.password}></ErrorMessage>
           )}

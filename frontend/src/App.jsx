@@ -13,6 +13,7 @@ import NotFoundClientOrEmployed from "./components/NotFoundClientOrEmployed";
 import EmployedDashboard from "./components/EmployedDashboard";
 import { ClientProvider } from "./contexts/ClientContext";
 import { PurchaseProvider } from "./contexts/PurchaseContext";
+import { EmployedProvider } from "./contexts/EmployedContext";
 
 function App() {
   return (
@@ -21,31 +22,33 @@ function App() {
         <img src="./src/img/favicon.png" alt="logo de estacion de servicio" />
         <h2>Estación LF</h2>
       </div>
-      <ClientProvider>
-        <PurchaseProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login-client" element={<LoginClient />} />
-              <Route path="/login-employed" element={<LoginEmployed />} />
-              <Route path="/register-client" element={<RegisterClient />} />
-              <Route path="/pump" element={<SelectFuelPump />} />
-              <Route path="/fuel" element={<SelectFuelProduct />} />
-              <Route path="/pay" element={<SelectPayMethod />} />
-              <Route path="/amount" element={<EnterAmount />} />
-              <Route path="/description" element={<OrderDescription />} />
-              <Route
-                path="/employed-dashboard"
-                element={<EmployedDashboard />}
-              />
-              <Route
-                path="//not-found-client-or-employed"
-                element={<NotFoundClientOrEmployed />}
-              />
-            </Routes>
-          </BrowserRouter>
-        </PurchaseProvider>
-      </ClientProvider>
+      <EmployedProvider>
+        <ClientProvider>
+          <PurchaseProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login-client" element={<LoginClient />} />
+                <Route path="/login-employed" element={<LoginEmployed />} />
+                <Route path="/register-client" element={<RegisterClient />} />
+                <Route path="/pump" element={<SelectFuelPump />} />
+                <Route path="/fuel" element={<SelectFuelProduct />} />
+                <Route path="/pay" element={<SelectPayMethod />} />
+                <Route path="/amount" element={<EnterAmount />} />
+                <Route path="/description" element={<OrderDescription />} />
+                <Route
+                  path="/employed-dashboard"
+                  element={<EmployedDashboard />}
+                />
+                <Route
+                  path="//not-found-client-or-employed"
+                  element={<NotFoundClientOrEmployed />}
+                />
+              </Routes>
+            </BrowserRouter>
+          </PurchaseProvider>
+        </ClientProvider>
+      </EmployedProvider>
     </>
   );
 }

@@ -8,6 +8,12 @@ a {
 .btn {
   background-color: rgb(59 72 249);
   padding: 0;
+  color: rgb(255, 255, 255);
+}
+
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .btn-accept {
@@ -46,6 +52,7 @@ a {
 .btn-red {
   position: absolute;
   bottom: 2rem;
+  color: #fbfbfb;
 }
 
 .container-content {
@@ -205,6 +212,25 @@ h2 {
   text-align: center;
 }
 
+h4 {
+  padding: 1rem;
+  margin: 0;
+}
+
+.panel {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+}
+
+.panel-item button {
+  width: 7rem;
+}
+
 /* Media */
 
 @media (min-width: 650px) {
@@ -214,5 +240,10 @@ h2 {
 
   .container-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panel {
+    flex-direction: row;
+    justify-content: space-around;
   }
 }

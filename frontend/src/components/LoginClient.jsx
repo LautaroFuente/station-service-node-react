@@ -29,6 +29,12 @@ function LoginClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    resetErrorForm();
+    setFormErrorServer(false);
+    setClientNotRegistered({
+      state: false,
+      message: "",
+    });
     const result = validateLoguinClientData(form);
     if (result.success) {
       try {
@@ -75,6 +81,9 @@ function LoginClient() {
       console.log(`Falla validacion `);
       const errors = result.error.errors;
       errors.forEach((error) => {
+        if (error.message === "Expected number, received nan") {
+          error.message = "El dni debe ser un numero";
+        }
         handleErrorForm(error.path, error.message);
       });
     }
