@@ -62,22 +62,6 @@ const employeds = {
     }
   },
 
-  authEmployed: async (employed) => {
-    try {
-      const query =
-        "INSERT INTO employeds(employed_id, name, last_name, dni) values (0, ?, ?, ?);";
-      const [result] = await connection.execute(query, [
-        employed.name,
-        employed.last_name,
-        employed.dni,
-      ]);
-      if (result) return true;
-      return false;
-    } catch (err) {
-      console.log(err);
-      throw new Error("Error al agregar un cliente");
-    }
-  },
 };
 
 export default employeds;
