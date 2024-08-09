@@ -13,7 +13,14 @@ import EmployedDashboard from "./components/EmployedDashboard";
 import { ClientProvider } from "./contexts/ClientContext";
 import { PurchaseProvider } from "./contexts/PurchaseContext";
 import { EmployedProvider } from "./contexts/EmployedContext";
-
+import OneClientView from "./components/OneClientView";
+import OneEmployedView from "./components/OneEmployedView";
+/**
+ * TODO:
+ *
+ * --como ultimo refactorizar, ver que sobre, implementar reducer si es necesario y ver donde pueden crearse mas hooks, services o helpers haciendo el codigo mas limpio
+ *
+ */
 function App() {
   return (
     <>
@@ -39,6 +46,12 @@ function App() {
                   path="/employed-dashboard"
                   element={<EmployedDashboard />}
                 />
+                <Route path="/one-client/:dni" element={<OneClientView />} />
+                <Route
+                  path="/one-employed/:dni"
+                  element={<OneEmployedView />}
+                />
+        
               </Routes>
             </BrowserRouter>
           </PurchaseProvider>

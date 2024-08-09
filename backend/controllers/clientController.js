@@ -42,15 +42,18 @@ export const addClient = async (req, res) => {
 
     if (result.success) {
       console.log("Validacion correcta");
-      let data = await clients.addClient({ name, last_name, dni, age });
-
-      res.status(201).json(data);
+      let clientExist = await clients.getOneClient(dni);
+      if (clientExist) {
+        res.status(409).json({ errors: "DNI ya registrado" });
+      } else {
+        let data = await clients.addClient({ name, last_name, dni, age });
+        res.status(201).json(data);
+      }
     } else {
       console.error("Errores de validacion", result.error.errors);
       res.status(400).json({ errors: result.error.format() });
     }
   } catch (e) {
     console.log(e);
-    throw new Error("Error al crear el cliente");
   }
 };
