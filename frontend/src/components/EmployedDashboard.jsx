@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { EmployedContext } from "../contexts/EmployedContext";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 function EmployedDashboard() {
   const { employed, resetEmployed } = useContext(EmployedContext);
@@ -19,18 +20,15 @@ function EmployedDashboard() {
 
   const fetchClients = async () => {
     try {
-      const response = await fetch("http://localhost:3000/server/clients/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const data = await fetchGeneric("http://localhost:3000/server/clients/", "GET", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }) ;
 
-      if (!response.ok) {
+      if (data == null) {
         throw new Error("Error al cargar todos los clientes");
       }
-      const data = await response.json();
+
       setError({ state: false, message: "" });
       return data;
     } catch (error) {

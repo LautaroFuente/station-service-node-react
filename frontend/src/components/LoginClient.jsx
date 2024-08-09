@@ -5,6 +5,7 @@ import ErrorMessage from "./ErrorMessage";
 import { useNavigate } from "react-router-dom";
 import { ClientContext } from "../contexts/ClientContext";
 import { NavLink } from "react-router-dom";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = { dni: "" };
 
@@ -14,7 +15,7 @@ function LoginClient() {
     state: false,
     message: "",
   });
-  const { setClient } = useContext(ClientContext);
+  const { dispatch } = useContext(ClientContext);
 
   const navigate = useNavigate();
 
@@ -39,34 +40,29 @@ function LoginClient() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        let response = await fetch(
-          "http://localhost:3000/server/auth/login-client",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(form),
-          }
-        );
+        const response = await fetchGeneric("http://localhost:3000/server/auth/login-client", "POST", {
+          "Content-Type": "application/json",
+        }, JSON.stringify(form));
 
-        if (!response.ok) {
+        if (response == null) {
           throw new Error("Error al iniciar sesion");
         }
 
-        response = await response.json();
         const { token, data } = response;
         if (response.error) {
           setClientNotRegistered({ state: true, message: response.error });
         } else {
           console.log("Inicio de sesion exitoso");
-          setClient({
-            client_id: data[0].client_id,
-            name: data[0].name,
-            last_name: data[0].last_name,
-            dni: data[0].dni,
-            token,
-          });
+          dispatch({
+            type:"SET_CLIENT",
+            payload:{
+              client_id: data[0].client_id,
+              name: data[0].name,
+              last_name: data[0].last_name,
+              dni: data[0].dni,
+              token,
+            }
+          })
           navigate("/pump");
         }
         resetForm();

@@ -5,6 +5,7 @@ import { EmployedContext } from "../contexts/EmployedContext";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { validateLoguinEmployedData } from "../helpers/validateFormData";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = { dni: "", employed_password: "" };
 
@@ -39,22 +40,14 @@ function LoginEmployed() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        let response = await fetch(
-          "http://localhost:3000/server/auth/login-employed",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(form),
-          }
-        );
+        const response = await fetchGeneric("http://localhost:3000/server/auth/login-employed", "POST", {
+          "Content-Type": "application/json",
+        }, JSON.stringify(form));
 
-        if (!response.ok) {
+        if (response == null) {
           throw new Error("Error al iniciar sesion");
         }
 
-        response = await response.json();
         const { token, data } = response;
         if (response.error) {
           setEmployedNotRegistered({ state: true, message: response.error });

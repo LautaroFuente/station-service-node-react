@@ -7,8 +7,8 @@ import { PurchaseContext } from "../contexts/PurchaseContext";
 import { createDate } from "../helpers/createDate";
 
 function SelectFuelPump() {
-  const { client } = useContext(ClientContext);
-  const { client_id, name, last_name, token } = client;
+  const { state } = useContext(ClientContext);
+  const { client_id, name, last_name, token } = state;
   const navigate = useNavigate();
   const { purchase, setPurchase } = useContext(PurchaseContext);
 

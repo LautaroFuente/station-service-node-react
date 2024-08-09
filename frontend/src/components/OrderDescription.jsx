@@ -9,11 +9,12 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 function OrderDescription() {
   const { purchase, resetPurchase } = useContext(PurchaseContext);
-  const { client, resetClient } = useContext(ClientContext);
-  const { name, last_name, token } = client;
+  const { state, dispatch } = useContext(ClientContext);
+  const { name, last_name, token } = state;
   const navigate = useNavigate();
 
   const [formErrorServer, setFormErrorServer] = useState(false);
@@ -28,19 +29,14 @@ function OrderDescription() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/server/purchases/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(dataPurchase),
-      });
+      const data = await fetchGeneric("http://localhost:3000/server/purchases/", "POST", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }, JSON.stringify(dataPurchase));
 
-      if (!response.ok) {
+      if (data == null) {
         throw new Error("Error al agregar");
       }
-      const data = await response.json();
       console.log("Agregado con exito:", data);
     } catch (error) {
       console.error("Error:", error);
@@ -52,7 +48,7 @@ function OrderDescription() {
     console.log(purchase);
     console.log("Fin Compra");
     fetchPurchase();
-    resetClient();
+    dispatch({type: "RESET_CLIENT"});
     resetPurchase();
     navigate("/");
   };

@@ -9,7 +9,6 @@ import OrderDescription from "./components/OrderDescription";
 import LoginClient from "./components/LoginClient";
 import LoginEmployed from "./components/LoginEmployed";
 import RegisterClient from "./components/RegisterClient";
-import NotFoundClientOrEmployed from "./components/NotFoundClientOrEmployed";
 import EmployedDashboard from "./components/EmployedDashboard";
 import { ClientProvider } from "./contexts/ClientContext";
 import { PurchaseProvider } from "./contexts/PurchaseContext";
@@ -39,10 +38,6 @@ function App() {
                 <Route
                   path="/employed-dashboard"
                   element={<EmployedDashboard />}
-                />
-                <Route
-                  path="//not-found-client-or-employed"
-                  element={<NotFoundClientOrEmployed />}
                 />
               </Routes>
             </BrowserRouter>

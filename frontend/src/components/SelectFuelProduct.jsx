@@ -8,8 +8,8 @@ import { useContext } from "react";
 function SelectFuelProduct() {
   const navigate = useNavigate();
   const { purchase, setPurchase } = useContext(PurchaseContext);
-  const { client } = useContext(ClientContext);
-  const { token } = client;
+  const { state } = useContext(ClientContext);
+  const { token } = state;
 
   const handleClick = (product) => {
     setPurchase({

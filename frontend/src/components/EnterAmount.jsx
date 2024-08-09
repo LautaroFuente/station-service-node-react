@@ -7,8 +7,8 @@ import { createRef, useContext } from "react";
 function EnterAmount() {
   const navigate = useNavigate();
   const { purchase, setPurchase } = useContext(PurchaseContext);
-  const { client } = useContext(ClientContext);
-  const { token } = client;
+  const { state } = useContext(ClientContext);
+  const { token } = state;
   const refDisplay = createRef();
 
   const handleClickSubmit = (amount) => {

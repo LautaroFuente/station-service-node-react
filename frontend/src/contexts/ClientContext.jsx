@@ -1,24 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useReducer } from "react";
+import { initialClient, clientReducer } from "../reducers/clientReducer";
 
 export const ClientContext = createContext();
 
-const initialClient = {
-  client_id: 0,
-  name: "",
-  last_name: "",
-  dni: "",
-  token: "",
-};
-
 export const ClientProvider = ({ children }) => {
-  const [client, setClient] = useState(initialClient);
-
-  const resetClient = () => {
-    setClient(initialClient);
-  };
+  const [state, dispatch] = useReducer(clientReducer,initialClient)
 
   return (
-    <ClientContext.Provider value={{ client, setClient, resetClient }}>
+    <ClientContext.Provider value={{ state, dispatch }}>
       {children}
     </ClientContext.Provider>
   );

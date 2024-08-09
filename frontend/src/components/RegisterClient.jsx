@@ -4,6 +4,7 @@ import ErrorMessage from "./ErrorMessage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = {
   name: "",
@@ -31,19 +32,14 @@ function RegisterClient() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetch("http://localhost:3000/server/clients/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        });
+        const data = await fetchGeneric("http://localhost:3000/server/clients/", "POST", {
+          "Content-Type": "application/json",
+        }, JSON.stringify(form));
 
-        if (!response.ok) {
+        if (data == null) {
           throw new Error("Error al agregar");
         }
 
-        const data = await response.json();
         console.log("Agregado con exito:", data);
         resetForm();
         resetErrorForm();
