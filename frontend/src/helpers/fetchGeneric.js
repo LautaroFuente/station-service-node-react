@@ -11,6 +11,10 @@ export const fetchGeneric = async (url, method = "GET", headers = {}, body = "" 
 
         let data = null;
         if(!response.ok){
+            if (response.status == 409){
+                data = "Error DNI ya registrado";
+                return data;
+            }
             return data;
         }
         data = await response.json();

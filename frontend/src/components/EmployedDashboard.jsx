@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { EmployedContext } from "../contexts/EmployedContext";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
-import { fetchGeneric } from "../helpers/fetchGeneric";
 import AllClientsView from "./AllClientsView";
 import AllEmployedView from "./AllEmployedView";
 import AllPurchaseView from "./AllPurchasesView";
