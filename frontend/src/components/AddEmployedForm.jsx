@@ -1,20 +1,19 @@
-import { useForm } from "../hooks/useForm";
-import { validateNewClientData } from "../helpers/validateFormData";
-import ErrorMessage from "./ErrorMessage";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { useForm } from "../hooks/useForm";
+import ErrorMessage from "./ErrorMessage";
+import { validateNewEmployedData } from "../helpers/validateFormData";
+import SuccessMessage from "./SuccessMessage";
 
 const initialForm = {
   name: "",
   last_name: "",
   dni: "",
-  age: "",
+  employed_password: "",
 };
 
-function RegisterClient() {
-  const [formErrorServer, setFormErrorServer] = useState("");
-  const navigate = useNavigate();
+function AddEmployedForm({ token }) {
+  const [formErrorServer, setFormErrorServer] = useState(false);
+  const [addOK, setAddOK] = useState(false);
 
   const {
     form,
@@ -27,40 +26,36 @@ function RegisterClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = validateNewClientData(form);
+    const result = validateNewEmployedData(form);
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetch("http://localhost:3000/server/clients/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        });
+        const response = await fetch(
+          "http://localhost:3000/server/employeds/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(form),
+          }
+        );
 
         if (!response.ok) {
-          if (response.status == 409) {
-            throw new Error("Error DNI ya registrado");
-          } else {
-            throw new Error("Error al agregar");
-          }
+          throw new Error("Error al agregar");
         }
 
         const data = await response.json();
         console.log("Agregado con exito:", data);
         resetForm();
         resetErrorForm();
-        navigate("/login-client");
+        setAddOK(true);
       } catch (error) {
-        console.error(error.message);
+        console.error("Error:", error);
         resetForm();
         resetErrorForm();
-        if (error.message == "Error DNI ya registrado") {
-          setFormErrorServer(error.message);
-        } else {
-          setFormErrorServer("Error con el servidor");
-        }
+        setFormErrorServer(true);
       }
     } else {
       console.log(`Falla validacion `);
@@ -72,8 +67,8 @@ function RegisterClient() {
   };
 
   return (
-    <>
-      <h1>¡REGISTRATE!</h1>
+    <div className="container-content">
+      <h1>Alta Empleado</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nombre:</label>
@@ -118,12 +113,12 @@ function RegisterClient() {
           )}
         </div>
         <div>
-          <label htmlFor="age">Edad:</label>
+          <label htmlFor="employed_password">Contraseña:</label>
           <input
-            type="number"
-            id="age"
-            name="age"
-            value={form.age}
+            type="password"
+            id="employed_password"
+            name="employed_password"
+            value={form.employed_password}
             onChange={handleInputChange}
             required
           />
@@ -132,19 +127,15 @@ function RegisterClient() {
           )}
         </div>
         <button type="submit" className="submit">
-          Registrarse
+          Registrar
         </button>
       </form>
-      {formErrorServer != "" && (
-        <ErrorMessage message={formErrorServer}></ErrorMessage>
+      {formErrorServer && (
+        <ErrorMessage message="Error con el servidor"></ErrorMessage>
       )}
-      <div className="container-content">
-        <NavLink to={"/"}>
-          <button className="btn-back-home">Volver al inicio</button>
-        </NavLink>
-      </div>
-    </>
+      {addOK && <SuccessMessage message="Agregado con exito"></SuccessMessage>}
+    </div>
   );
 }
 
-export default RegisterClient;
+export default AddEmployedForm;

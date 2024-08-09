@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PurchaseContext } from "../contexts/PurchaseContext";
 import { createDate } from "../helpers/createDate";
+import { selectEmployed } from "../helpers/SelectEmployed";
 
 function SelectFuelPump() {
   const { client } = useContext(ClientContext);
@@ -17,7 +18,7 @@ function SelectFuelPump() {
     setPurchase({
       ...purchase,
       client: client_id,
-      employed: 1,
+      employed: selectEmployed(),
       purchase_date: date,
       description: { ...purchase.description, surtidor: `Surtidor ${num}` },
     });

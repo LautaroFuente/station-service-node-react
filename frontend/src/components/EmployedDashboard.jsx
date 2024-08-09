@@ -3,13 +3,20 @@ import { NavLink } from "react-router-dom";
 import { EmployedContext } from "../contexts/EmployedContext";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
+import AllClientsView from "./AllClientsView";
+import AllEmployedView from "./AllEmployedView";
+import AllPurchaseView from "./AllPurchasesView";
+import AddEmployedForm from "./AddEmployedForm";
 
 function EmployedDashboard() {
   const { employed, resetEmployed } = useContext(EmployedContext);
   const { token } = employed;
   const navigate = useNavigate();
 
-  const [clients, setClients] = useState([]);
+  const [viewClients, setViewClients] = useState(false);
+  const [viewEmployed, setViewEmployed] = useState(false);
+  const [viewPurchase, setViewPurchase] = useState(false);
+  const [viewAddEmployed, setViewAddEmployed] = useState(false);
   const [error, setError] = useState({ state: false, message: "" });
 
   const handleLogout = () => {
@@ -17,31 +24,31 @@ function EmployedDashboard() {
     navigate("/");
   };
 
-  const fetchClients = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/server/clients/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al cargar todos los clientes");
-      }
-      const data = await response.json();
-      setError({ state: false, message: "" });
-      return data;
-    } catch (error) {
-      console.log(error);
-      setError({ state: true, message: "Error al cargar todos los clientes" });
-    }
+  const resetOptions = () => {
+    setViewAddEmployed(false);
+    setViewClients(false);
+    setViewEmployed(false);
+    setViewPurchase(false);
   };
 
-  const handleViewClients = async () => {
-    const clients = await fetchClients();
-    setClients(clients);
+  const handleViewAddEmployed = () => {
+    resetOptions();
+    setViewAddEmployed(true);
+  };
+
+  const handleViewPurchase = () => {
+    resetOptions();
+    setViewPurchase(true);
+  };
+
+  const handleViewEmployed = () => {
+    resetOptions();
+    setViewEmployed(true);
+  };
+
+  const handleViewClients = () => {
+    resetOptions();
+    setViewClients(true);
   };
 
   return (
@@ -51,40 +58,28 @@ function EmployedDashboard() {
           <h1>Panel Empleados</h1>
           <ul className="panel">
             <li className="panel-item">
-              <button>Alta de Empleado</button>
-            </li>
-            <li className="panel-item">
-              <button>Baja de empleado</button>
+              <button onClick={handleViewAddEmployed}>Alta de Empleado</button>
             </li>
             <li className="panel-item">
               <button onClick={handleViewClients}>Ver Clientes</button>
             </li>
             <li className="panel-item">
-              <button>Opcion</button>
+              <button onClick={handleViewEmployed}>Ver Empleados</button>
+            </li>
+            <li className="panel-item">
+              <button onClick={handleViewPurchase}>Ver Compras</button>
             </li>
           </ul>
-          <div className="container-content">
-            {clients.length > 0 &&
-              clients.map((client) => {
-                return (
-                  <div
-                    key={client.dni}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                      border: "solid 2px black",
-                    }}
-                  >
-                    <h4>{`Cliente: ${client.client_id}`}</h4>
-                    <h4>{`Apellido: ${client.last_name}`}</h4>
-                    <h4>{`Nombre: ${client.name}`}</h4>
-                    <h4>{`DNI: ${client.dni}`}</h4>
-                    <h4>{`Edad: ${client.age}`}</h4>
-                  </div>
-                );
-              })}
-          </div>
+          {viewClients && <AllClientsView token={token} setError={setError} />}
+          {viewEmployed && (
+            <AllEmployedView token={token} setError={setError} />
+          )}
+          {viewPurchase && (
+            <AllPurchaseView token={token} setError={setError} />
+          )}
+          {viewAddEmployed && (
+            <AddEmployedForm token={token} setError={setError} />
+          )}
           {error.state && <ErrorMessage message={error.message}></ErrorMessage>}
           <div className="container-content">
             <NavLink to={"/"}>
