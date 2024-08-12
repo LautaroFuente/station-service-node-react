@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
+
+const urlAllClients = "http://localhost:3000/server/clients/";
 
 function AllClientsView({ token, setError }) {
   const [clients, setClients] = useState([]);
@@ -31,18 +34,14 @@ function AllClientsView({ token, setError }) {
 
   const fetchClients = async () => {
     try {
-      const response = await fetch("http://localhost:3000/server/clients/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      const data = await fetchGeneric(urlAllClients, "GET", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       });
 
-      if (!response.ok) {
+      if (data == null) {
         throw new Error("Error al cargar todos los clientes");
       }
-      const data = await response.json();
       setClients(data);
       setFilteredClients(data);
       setError({ state: false, message: "" });

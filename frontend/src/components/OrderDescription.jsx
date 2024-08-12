@@ -12,20 +12,20 @@ import ErrorMessage from "./ErrorMessage";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 function OrderDescription() {
-  const { purchase, resetPurchase } = useContext(PurchaseContext);
-  const { state, dispatch } = useContext(ClientContext);
-  const { name, last_name, token } = state;
+  const { statePurchase, dispatchPurchase } = useContext(PurchaseContext);
+  const { stateClient, dispatchClient } = useContext(ClientContext);
+  const { name, last_name, token } = stateClient;
   const navigate = useNavigate();
 
   const [formErrorServer, setFormErrorServer] = useState(false);
 
   const fetchPurchase = async () => {
     let dataPurchase = {
-      client: purchase.client,
-      employed: purchase.employed,
-      purchase_date: purchase.purchase_date,
-      description: `${purchase.description.surtidor}, ${purchase.description.producto}, ${purchase.description.metodo_pago}, ${purchase.description.total}, ${purchase.description.litros}`,
-      total_amount: purchase.total_amount,
+      client: statePurchase.client,
+      employed: statePurchase.employed,
+      purchase_date: statePurchase.purchase_date,
+      description: `${statePurchase.description.surtidor}, ${statePurchase.description.producto}, ${statePurchase.description.metodo_pago}, ${statePurchase.description.total}, ${statePurchase.description.litros}`,
+      total_amount: statePurchase.total_amount,
     };
 
     try {
@@ -48,8 +48,8 @@ function OrderDescription() {
     console.log(purchase);
     console.log("Fin Compra");
     fetchPurchase();
-    dispatch({type: "RESET_CLIENT"});
-    resetPurchase();
+    dispatchClient({type: "RESET_CLIENT"});
+    dispatchPurchase({type: "RESET_PURCHASE"});
     navigate("/");
   };
 
@@ -62,30 +62,30 @@ function OrderDescription() {
           <div className="container-grid">
             <div className="grid-item">
               <div>
-                <p>{purchase.description.surtidor}</p>
+                <p>{statePurchase.description.surtidor}</p>
                 <img src={PhotoPumpFuel} alt="Surtidor" />
               </div>
             </div>
             <div className="grid-item">
               <div>
-                <p>{purchase.description.producto}</p>
+                <p>{statePurchase.description.producto}</p>
                 <img src={PhotoProduct} alt="Gasolina" />
               </div>
             </div>
             <div className="grid-item">
               <div>
-                <p>{purchase.description.metodo_pago}</p>
+                <p>{statePurchase.description.metodo_pago}</p>
                 <img src={PhotoPayMethod} alt="Metodo de Pago" />
               </div>
             </div>
             <div className="grid-item">
               <div>
-                <p>{purchase.description.litros}</p>
+                <p>{statePurchase.description.litros}</p>
                 <img src={PhotoQuantity} alt="Cantidad" />
               </div>
             </div>
           </div>
-          <h2>{`${purchase.description.total} a nombre de ${name} ${last_name}`}</h2>
+          <h2>{`${statePurchase.description.total} a nombre de ${name} ${last_name}`}</h2>
           {formErrorServer && (
             <ErrorMessage message="Error con el servidor"></ErrorMessage>
           )}

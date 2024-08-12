@@ -6,22 +6,15 @@ import { createRef, useContext } from "react";
 
 function EnterAmount() {
   const navigate = useNavigate();
-  const { purchase, setPurchase } = useContext(PurchaseContext);
-  const { state } = useContext(ClientContext);
-  const { token } = state;
+  const { dispatchPurchase } = useContext(PurchaseContext);
+  const { stateClient } = useContext(ClientContext);
+  const { token } = stateClient;
   const refDisplay = createRef();
 
   const handleClickSubmit = (amount) => {
     const amountNumber = Number(amount);
-    setPurchase({
-      ...purchase,
-      description: {
-        ...purchase.description,
-        total: `Costo ${amountNumber}`,
-        litros: `Litros ${amountNumber / 10}`,
-      },
-      total_amount: amountNumber,
-    });
+    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ total:`Costo ${amountNumber}`, litros: `Litros ${amountNumber / 10}` }});
+    dispatchPurchase({ type: "SET_PURCHASE_TOTAL_AMOUNT", payload:amountNumber });
     navigate("/description");
   };
 

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
+
+const urlAllEmployed = "http://localhost:3000/server/employeds/"
 
 function AllEmployedView({ token, setError }) {
   const [employed, setEmployed] = useState([]);
@@ -31,18 +34,14 @@ function AllEmployedView({ token, setError }) {
 
   const fetchEmployed = async () => {
     try {
-      const response = await fetch("http://localhost:3000/server/employeds/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      const data = await fetchGeneric(urlAllEmployed, "GET", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       });
 
-      if (!response.ok) {
+      if (data == null) {
         throw new Error("Error al cargar todos los empleados");
       }
-      const data = await response.json();
       setEmployed(data);
       setFilteredEmployed(data);
       setError({ state: false, message: "" });

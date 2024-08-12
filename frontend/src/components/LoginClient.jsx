@@ -15,7 +15,7 @@ function LoginClient() {
     state: false,
     message: "",
   });
-  const { dispatch } = useContext(ClientContext);
+  const { dispatchClient } = useContext(ClientContext);
 
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ function LoginClient() {
           setClientNotRegistered({ state: true, message: response.error });
         } else {
           console.log("Inicio de sesion exitoso");
-          dispatch({
+          dispatchClient({
             type:"SET_CLIENT",
             payload:{
               client_id: data[0].client_id,

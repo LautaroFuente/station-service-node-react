@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import { EmployedContext } from "../contexts/EmployedContext";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
 
 function OneClientView() {
-  const { employed } = useContext(EmployedContext);
-  const { token } = employed;
+  const { stateEmployed } = useContext(EmployedContext);
+  const { token } = stateEmployed;
   const navigate = useNavigate();
   let { dni } = useParams();
   const [clientData, setClientData] = useState([]);
@@ -18,11 +19,6 @@ function OneClientView() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const totalPages = Math.ceil(clientData.length / dataForPage);
-
-  const currentData = clientData.slice(
-    currentPage * dataForPage,
-    currentPage * dataForPage + dataForPage
-  );
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
@@ -38,17 +34,10 @@ function OneClientView() {
 
   const fetchOneClient = async () => {
     try {
-      let response = await fetch(
-        `http://localhost:3000/server/purchases/client/${dni}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      let data = await response.json();
+      const data = fetchGeneric( `http://localhost:3000/server/purchases/client/${dni}`, "GET", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      } )
       setClientData(data);
     } catch (error) {
       console.log(`Error al traer las compras del cliente, error: ${error} `);

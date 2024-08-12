@@ -1,24 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import { employedReducer, initialEmployed } from "../reducers/employedReducer";
 
 export const EmployedContext = createContext();
 
-const initialEmployed = {
-  employed_id: 0,
-  name: "",
-  last_name: "",
-  dni: "",
-  token: "",
-};
-
 export const EmployedProvider = ({ children }) => {
-  const [employed, setEmployed] = useState(initialEmployed);
-
-  const resetEmployed = () => {
-    setEmployed(initialEmployed);
-  };
+  const [stateEmployed, dispatchEmployed ] = useReducer(employedReducer,initialEmployed);
 
   return (
-    <EmployedContext.Provider value={{ employed, setEmployed, resetEmployed }}>
+    <EmployedContext.Provider value={{ stateEmployed, dispatchEmployed }}>
       {children}
     </EmployedContext.Provider>
   );

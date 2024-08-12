@@ -15,7 +15,7 @@ function LoginEmployed() {
     state: false,
     message: "",
   });
-  const { setEmployed } = useContext(EmployedContext);
+  const { dispatchEmployed } = useContext(EmployedContext);
 
   const {
     form,
@@ -53,12 +53,15 @@ function LoginEmployed() {
           setEmployedNotRegistered({ state: true, message: response.error });
         } else {
           console.log("Inicio de sesion exitoso");
-          setEmployed({
-            employed_id: data[0].employed_id,
-            name: data[0].name,
-            last_name: data[0].last_name,
-            dni: data[0].dni,
-            token,
+          dispatchEmployed({
+            type: "SET_EMPLOYED",
+            payload: {
+              employed_id: data[0].employed_id,
+              name: data[0].name,
+              last_name: data[0].last_name,
+              dni: data[0].dni,
+              token,
+            }
           });
           navigate("/employed-dashboard");
         }

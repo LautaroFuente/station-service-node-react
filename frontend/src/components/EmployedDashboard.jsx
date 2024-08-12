@@ -9,8 +9,8 @@ import AllPurchaseView from "./AllPurchasesView";
 import AddEmployedForm from "./AddEmployedForm";
 
 function EmployedDashboard() {
-  const { employed, resetEmployed } = useContext(EmployedContext);
-  const { token } = employed;
+  const { stateEmployed, dispatchEmployed } = useContext(EmployedContext);
+  const { token } = stateEmployed;
   const navigate = useNavigate();
 
   const [viewClients, setViewClients] = useState(false);
@@ -20,7 +20,7 @@ function EmployedDashboard() {
   const [error, setError] = useState({ state: false, message: "" });
 
   const handleLogout = () => {
-    resetEmployed();
+    dispatchEmployed({type:"RESET_EMPLOYED"})
     navigate("/");
   };
 

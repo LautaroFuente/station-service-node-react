@@ -3,6 +3,7 @@ import { useForm } from "../hooks/useForm";
 import ErrorMessage from "./ErrorMessage";
 import { validateNewEmployedData } from "../helpers/validateFormData";
 import SuccessMessage from "./SuccessMessage";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = {
   name: "",
@@ -10,6 +11,8 @@ const initialForm = {
   dni: "",
   employed_password: "",
 };
+
+const urlAddEmployed = "http://localhost:3000/server/employeds/"
 
 function AddEmployedForm({ token }) {
   const [formErrorServer, setFormErrorServer] = useState(false);
@@ -30,23 +33,15 @@ function AddEmployedForm({ token }) {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetch(
-          "http://localhost:3000/server/employeds/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(form),
-          }
-        );
+        const data = await fetchGeneric(urlAddEmployed, "POST", {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }, JSON.stringify(form));
 
-        if (!response.ok) {
+        if (data == null) {
           throw new Error("Error al agregar");
         }
 
-        const data = await response.json();
         console.log("Agregado con exito:", data);
         resetForm();
         resetErrorForm();

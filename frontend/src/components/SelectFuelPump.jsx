@@ -8,10 +8,10 @@ import { createDate } from "../helpers/createDate";
 import { selectEmployed } from "../helpers/SelectEmployed";
 
 function SelectFuelPump() {
-  const { state } = useContext(ClientContext);
-  const { client_id, name, last_name, token } = state;
+  const { stateClient } = useContext(ClientContext);
+  const { client_id, name, last_name, token } = stateClient;
   const navigate = useNavigate();
-  const { purchase, setPurchase } = useContext(PurchaseContext);
+  const { statePurchase, dispatchPurchase } = useContext(PurchaseContext);
 
   const handleClick = (num) => {
     const date = createDate();
@@ -22,6 +22,10 @@ function SelectFuelPump() {
       purchase_date: date,
       description: { ...purchase.description, surtidor: `Surtidor ${num}` },
     });
+    dispatchPurchase({ type: "SET_PURCHASE_CLIENT" , payload: client_id});
+    dispatchPurchase({ type: "SET_PURCHASE_EMPLOYED" , payload:selectEmployed()});
+    dispatchPurchase({ type: "SET_PURCHASE_PURCHASE_DATE" , payload:date});
+    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ surtidor: `Surtidor ${num}` }});
     navigate("/fuel");
   };
 

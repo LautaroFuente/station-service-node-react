@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
+
+const urlAllPurchases = "http://localhost:3000/server/purchases/";
 
 function AllPurchaseView({ token, setError }) {
   const [purchases, setPurchases] = useState([]);
@@ -30,18 +33,15 @@ function AllPurchaseView({ token, setError }) {
 
   const fetchPurchase = async () => {
     try {
-      const response = await fetch("http://localhost:3000/server/purchases/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      const data = await fetchGeneric(urlAllPurchases, "GET", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       });
 
-      if (!response.ok) {
+      if (data == null) {
         throw new Error("Error al cargar todas las compras");
       }
-      const data = await response.json();
+
       setPurchases(data);
       setFilteredPurchases(data);
       setError({ state: false, message: "" });

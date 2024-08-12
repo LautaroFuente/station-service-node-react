@@ -1,30 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import { initialPurchase, purchaseReducer } from "../reducers/purchaseReducer";
 
 export const PurchaseContext = createContext();
 
-const initialPurchase = {
-  client: 0,
-  employed: 0,
-  purchase_date: "",
-  description: {
-    surtidor: "",
-    producto: "",
-    metodo_pago: "",
-    total: "",
-    litros: "",
-  },
-  total_amount: 0,
-};
-
 export const PurchaseProvider = ({ children }) => {
-  const [purchase, setPurchase] = useState(initialPurchase);
-
-  const resetPurchase = () => {
-    setPurchase(initialPurchase);
-  };
+  const [statePurchase, dispatchPurchase] = useReducer(purchaseReducer,initialPurchase);
 
   return (
-    <PurchaseContext.Provider value={{ purchase, setPurchase, resetPurchase }}>
+    <PurchaseContext.Provider value={{ statePurchase, dispatchPurchase }}>
       {children}
     </PurchaseContext.Provider>
   );

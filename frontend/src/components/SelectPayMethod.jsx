@@ -8,18 +8,12 @@ import { useContext } from "react";
 
 function SelectPayMethod() {
   const navigate = useNavigate();
-  const { purchase, setPurchase } = useContext(PurchaseContext);
-  const { state } = useContext(ClientContext);
-  const { token } = state;
+  const { dispatchPurchase } = useContext(PurchaseContext);
+  const { stateClient } = useContext(ClientContext);
+  const { token } = stateClient;
 
   const handleClick = (method) => {
-    setPurchase({
-      ...purchase,
-      description: {
-        ...purchase.description,
-        metodo_pago: `Metodo de pago ${method}`,
-      },
-    });
+    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ metodo_pago: `Metodo de pago ${method}` }});
     navigate("/amount");
   };
 

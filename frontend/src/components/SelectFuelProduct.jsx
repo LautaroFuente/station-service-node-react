@@ -7,15 +7,12 @@ import { useContext } from "react";
 
 function SelectFuelProduct() {
   const navigate = useNavigate();
-  const { purchase, setPurchase } = useContext(PurchaseContext);
-  const { state } = useContext(ClientContext);
-  const { token } = state;
+  const { dispatchPurchase } = useContext(PurchaseContext);
+  const { stateClient } = useContext(ClientContext);
+  const { token } = stateClient;
 
   const handleClick = (product) => {
-    setPurchase({
-      ...purchase,
-      description: { ...purchase.description, producto: `Producto ${product}` },
-    });
+    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ producto: `Producto ${product}` }});
     navigate("/pay");
   };
 
