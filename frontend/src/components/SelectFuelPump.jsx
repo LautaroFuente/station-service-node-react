@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PurchaseContext } from "../contexts/PurchaseContext";
 import { createDate } from "../helpers/createDate";
-import { selectEmployed } from "../helpers/SelectEmployed";
+//import { selectEmployed } from "../helpers/SelectEmployed";
 
 function SelectFuelPump() {
   const { stateClient } = useContext(ClientContext);
@@ -15,17 +15,16 @@ function SelectFuelPump() {
 
   const handleClick = (num) => {
     const date = createDate();
-    setPurchase({
-      ...purchase,
-      client: client_id,
-      employed: selectEmployed(),
-      purchase_date: date,
-      description: { ...purchase.description, surtidor: `Surtidor ${num}` },
+    dispatchPurchase({ type: "SET_PURCHASE_CLIENT", payload: client_id });
+    dispatchPurchase({
+      type: "SET_PURCHASE_EMPLOYED",
+      payload: 1,
     });
-    dispatchPurchase({ type: "SET_PURCHASE_CLIENT" , payload: client_id});
-    dispatchPurchase({ type: "SET_PURCHASE_EMPLOYED" , payload:selectEmployed()});
-    dispatchPurchase({ type: "SET_PURCHASE_PURCHASE_DATE" , payload:date});
-    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ surtidor: `Surtidor ${num}` }});
+    dispatchPurchase({ type: "SET_PURCHASE_PURCHASE_DATE", payload: date });
+    dispatchPurchase({
+      type: "SET_PURCHASE_DESCRIPTION",
+      payload: { surtidor: `Surtidor ${num}` },
+    });
     navigate("/fuel");
   };
 
