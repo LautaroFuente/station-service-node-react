@@ -8,12 +8,20 @@ import { useContext } from "react";
 function SelectFuelProduct() {
   const navigate = useNavigate();
   const { dispatchPurchase } = useContext(PurchaseContext);
-  const { stateClient } = useContext(ClientContext);
+  const { stateClient, dispatchClient } = useContext(ClientContext);
   const { token } = stateClient;
 
   const handleClick = (product) => {
-    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ producto: `Producto ${product}` }});
+    dispatchPurchase({
+      type: "SET_PURCHASE_DESCRIPTION",
+      payload: { producto: `Producto ${product}` },
+    });
     navigate("/pay");
+  };
+
+  const handleLogout = () => {
+    dispatchClient({ type: "RESET_CLIENT" });
+    navigate("/");
   };
 
   return (
@@ -61,7 +69,9 @@ function SelectFuelProduct() {
           </div>
           <div className="container-content">
             <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
+              <button className="btn-back-home" onClick={handleLogout}>
+                Volver al inicio
+              </button>
             </NavLink>
           </div>
         </div>

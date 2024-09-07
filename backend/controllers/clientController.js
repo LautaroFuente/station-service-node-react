@@ -43,7 +43,7 @@ export const addClient = async (req, res) => {
     if (result.success) {
       console.log("Validacion correcta");
       let clientExist = await clients.getOneClient(dni);
-      if (clientExist) {
+      if (clientExist.length > 0) {
         res.status(409).json({ errors: "DNI ya registrado" });
       } else {
         let data = await clients.addClient({ name, last_name, dni, age });

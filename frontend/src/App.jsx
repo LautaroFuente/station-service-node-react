@@ -15,12 +15,7 @@ import { PurchaseProvider } from "./contexts/PurchaseContext";
 import { EmployedProvider } from "./contexts/EmployedContext";
 import OneClientView from "./components/OneClientView";
 import OneEmployedView from "./components/OneEmployedView";
-/**
- * TODO:
- *
- * --como ultimo refactorizar, ver que sobre, implementar reducer si es necesario y ver donde pueden crearse mas hooks, services o helpers haciendo el codigo mas limpio
- *
- */
+
 function App() {
   return (
     <>
@@ -51,7 +46,6 @@ function App() {
                   path="/one-employed/:dni"
                   element={<OneEmployedView />}
                 />
-        
               </Routes>
             </BrowserRouter>
           </PurchaseProvider>

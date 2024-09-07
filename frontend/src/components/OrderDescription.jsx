@@ -29,10 +29,15 @@ function OrderDescription() {
     };
 
     try {
-      const data = await fetchGeneric("http://localhost:3000/server/purchases/", "POST", {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      }, JSON.stringify(dataPurchase));
+      const data = await fetchGeneric(
+        "http://localhost:3000/server/purchases/",
+        "POST",
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        JSON.stringify(dataPurchase)
+      );
 
       if (data == null) {
         throw new Error("Error al agregar");
@@ -45,11 +50,15 @@ function OrderDescription() {
   };
 
   const handleClickSubmit = () => {
-    console.log(purchase);
     console.log("Fin Compra");
     fetchPurchase();
-    dispatchClient({type: "RESET_CLIENT"});
-    dispatchPurchase({type: "RESET_PURCHASE"});
+    dispatchClient({ type: "RESET_CLIENT" });
+    dispatchPurchase({ type: "RESET_PURCHASE" });
+    navigate("/");
+  };
+
+  const handleLogout = () => {
+    dispatchClient({ type: "RESET_CLIENT" });
     navigate("/");
   };
 
@@ -94,7 +103,9 @@ function OrderDescription() {
               Aceptar compra y finalizar
             </button>
             <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
+              <button className="btn-back-home" onClick={handleLogout}>
+                Volver al inicio
+              </button>
             </NavLink>
           </div>
         </div>

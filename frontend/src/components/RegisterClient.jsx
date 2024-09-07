@@ -32,13 +32,18 @@ function RegisterClient() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const data = await fetchGeneric("http://localhost:3000/server/clients/", "POST", {
-          "Content-Type": "application/json",
-        }, JSON.stringify(form));
+        const data = await fetchGeneric(
+          "http://localhost:3000/server/clients/",
+          "POST",
+          {
+            "Content-Type": "application/json",
+          },
+          JSON.stringify(form)
+        );
 
         if (data == null) {
           throw new Error("Error al agregar");
-        }  
+        }
         if (data == "Error DNI ya registrado") {
           throw new Error("Error DNI ya registrado");
         }

@@ -8,7 +8,7 @@ import { createDate } from "../helpers/createDate";
 //import { selectEmployed } from "../helpers/SelectEmployed";
 
 function SelectFuelPump() {
-  const { stateClient } = useContext(ClientContext);
+  const { stateClient, dispatchClient } = useContext(ClientContext);
   const { client_id, name, last_name, token } = stateClient;
   const navigate = useNavigate();
   const { statePurchase, dispatchPurchase } = useContext(PurchaseContext);
@@ -26,6 +26,11 @@ function SelectFuelPump() {
       payload: { surtidor: `Surtidor ${num}` },
     });
     navigate("/fuel");
+  };
+
+  const handleLogout = () => {
+    dispatchClient({ type: "RESET_CLIENT" });
+    navigate("/");
   };
 
   return (
@@ -74,7 +79,9 @@ function SelectFuelPump() {
           </div>
           <div className="container-content">
             <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
+              <button className="btn-back-home" onClick={handleLogout}>
+                Volver al inicio
+              </button>
             </NavLink>
           </div>
         </div>

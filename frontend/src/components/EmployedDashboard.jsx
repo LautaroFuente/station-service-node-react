@@ -20,7 +20,7 @@ function EmployedDashboard() {
   const [error, setError] = useState({ state: false, message: "" });
 
   const handleLogout = () => {
-    dispatchEmployed({type:"RESET_EMPLOYED"})
+    dispatchEmployed({ type: "RESET_EMPLOYED" });
     navigate("/");
   };
 
@@ -82,9 +82,6 @@ function EmployedDashboard() {
           )}
           {error.state && <ErrorMessage message={error.message}></ErrorMessage>}
           <div className="container-content">
-            <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
-            </NavLink>
             <button className="btn-back-home" onClick={handleLogout}>
               Cerrar sesion
             </button>

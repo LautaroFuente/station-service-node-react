@@ -48,14 +48,19 @@ export const addEmployed = async (req, res) => {
     });
     if (result.success) {
       console.log("Validacion correcta");
-      let data = await employeds.addEmployed({
-        name,
-        last_name,
-        dni,
-        employed_password,
-      });
+      let employedExist = await employeds.getOneEmployed(dni);
+      if (employedExist.length > 0) {
+        res.status(409).json({ errors: "DNI ya registrado" });
+      } else {
+        let data = await employeds.addEmployed({
+          name,
+          last_name,
+          dni,
+          employed_password,
+        });
 
-      res.status(201).json(data);
+        res.status(201).json(data);
+      }
     } else {
       console.error("Errores de validacion", result.error.errors);
       res.status(400).json({ errors: result.error.format() });

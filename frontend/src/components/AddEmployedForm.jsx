@@ -12,10 +12,10 @@ const initialForm = {
   employed_password: "",
 };
 
-const urlAddEmployed = "http://localhost:3000/server/employeds/"
+const urlAddEmployed = "http://localhost:3000/server/employeds/";
 
 function AddEmployedForm({ token }) {
-  const [formErrorServer, setFormErrorServer] = useState(false);
+  const [formErrorServer, setFormErrorServer] = useState("");
   const [addOK, setAddOK] = useState(false);
 
   const {
@@ -33,13 +33,21 @@ function AddEmployedForm({ token }) {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const data = await fetchGeneric(urlAddEmployed, "POST", {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        }, JSON.stringify(form));
+        const data = await fetchGeneric(
+          urlAddEmployed,
+          "POST",
+          {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          JSON.stringify(form)
+        );
 
         if (data == null) {
           throw new Error("Error al agregar");
+        }
+        if (data == "Error DNI ya registrado") {
+          throw new Error("Error DNI ya registrado");
         }
 
         console.log("Agregado con exito:", data);
@@ -47,10 +55,14 @@ function AddEmployedForm({ token }) {
         resetErrorForm();
         setAddOK(true);
       } catch (error) {
-        console.error("Error:", error);
+        console.error(error.message);
         resetForm();
         resetErrorForm();
-        setFormErrorServer(true);
+        if (error.message == "Error DNI ya registrado") {
+          setFormErrorServer(error.message);
+        } else {
+          setFormErrorServer("Error con el servidor");
+        }
       }
     } else {
       console.log(`Falla validacion `);
@@ -125,8 +137,8 @@ function AddEmployedForm({ token }) {
           Registrar
         </button>
       </form>
-      {formErrorServer && (
-        <ErrorMessage message="Error con el servidor"></ErrorMessage>
+      {formErrorServer != "" && (
+        <ErrorMessage message={formErrorServer}></ErrorMessage>
       )}
       {addOK && <SuccessMessage message="Agregado con exito"></SuccessMessage>}
     </div>

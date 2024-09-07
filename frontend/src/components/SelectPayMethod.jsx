@@ -9,12 +9,20 @@ import { useContext } from "react";
 function SelectPayMethod() {
   const navigate = useNavigate();
   const { dispatchPurchase } = useContext(PurchaseContext);
-  const { stateClient } = useContext(ClientContext);
+  const { stateClient, dispatchClient } = useContext(ClientContext);
   const { token } = stateClient;
 
   const handleClick = (method) => {
-    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ metodo_pago: `Metodo de pago ${method}` }});
+    dispatchPurchase({
+      type: "SET_PURCHASE_DESCRIPTION",
+      payload: { metodo_pago: `Metodo de pago ${method}` },
+    });
     navigate("/amount");
+  };
+
+  const handleLogout = () => {
+    dispatchClient({ type: "RESET_CLIENT" });
+    navigate("/");
   };
 
   return (
@@ -38,7 +46,9 @@ function SelectPayMethod() {
           </div>
           <div className="container-content">
             <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
+              <button className="btn-back-home" onClick={handleLogout}>
+                Volver al inicio
+              </button>
             </NavLink>
           </div>
         </div>

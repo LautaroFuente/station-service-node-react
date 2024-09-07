@@ -7,14 +7,23 @@ import { createRef, useContext } from "react";
 function EnterAmount() {
   const navigate = useNavigate();
   const { dispatchPurchase } = useContext(PurchaseContext);
-  const { stateClient } = useContext(ClientContext);
+  const { stateClient, dispatchClient } = useContext(ClientContext);
   const { token } = stateClient;
   const refDisplay = createRef();
 
   const handleClickSubmit = (amount) => {
     const amountNumber = Number(amount);
-    dispatchPurchase({ type: "SET_PURCHASE_DESCRIPTION" , payload:{ total:`Costo ${amountNumber}`, litros: `Litros ${amountNumber / 10}` }});
-    dispatchPurchase({ type: "SET_PURCHASE_TOTAL_AMOUNT", payload:amountNumber });
+    dispatchPurchase({
+      type: "SET_PURCHASE_DESCRIPTION",
+      payload: {
+        total: `Costo ${amountNumber}`,
+        litros: `Litros ${amountNumber / 10}`,
+      },
+    });
+    dispatchPurchase({
+      type: "SET_PURCHASE_TOTAL_AMOUNT",
+      payload: amountNumber,
+    });
     navigate("/description");
   };
 
@@ -24,6 +33,11 @@ function EnterAmount() {
     } else {
       refDisplay.current.innerText = refDisplay.current.innerText + value;
     }
+  };
+
+  const handleLogout = () => {
+    dispatchClient({ type: "RESET_CLIENT" });
+    navigate("/");
   };
 
   return (
@@ -79,7 +93,9 @@ function EnterAmount() {
               ACEPTAR
             </button>
             <NavLink to={"/"}>
-              <button className="btn-back-home">Volver al inicio</button>
+              <button className="btn-back-home" onClick={handleLogout}>
+                Volver al inicio
+              </button>
             </NavLink>
           </div>
         </div>
