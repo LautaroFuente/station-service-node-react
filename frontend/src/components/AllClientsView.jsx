@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
-
-const urlAllClients = "http://localhost:3000/server/clients/";
+const apiUrl = import.meta.env.VITE_API_URL;
+const urlAllClients = `${apiUrl}/clients/`;
 
 function AllClientsView({ token, setError }) {
   const [clients, setClients] = useState([]);

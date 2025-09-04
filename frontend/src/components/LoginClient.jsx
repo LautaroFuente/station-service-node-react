@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = { dni: "" };
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function LoginClient() {
   const [formErrorServer, setFormErrorServer] = useState(false);
@@ -40,9 +41,14 @@ function LoginClient() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetchGeneric("http://localhost:3000/server/auth/login-client", "POST", {
-          "Content-Type": "application/json",
-        }, JSON.stringify(form));
+        const response = await fetchGeneric(
+          `${apiUrl}/auth/login-client`,
+          "POST",
+          {
+            "Content-Type": "application/json",
+          },
+          JSON.stringify(form)
+        );
 
         if (response == null) {
           throw new Error("Error al iniciar sesion");
@@ -54,15 +60,15 @@ function LoginClient() {
         } else {
           console.log("Inicio de sesion exitoso");
           dispatchClient({
-            type:"SET_CLIENT",
-            payload:{
+            type: "SET_CLIENT",
+            payload: {
               client_id: data[0].client_id,
               name: data[0].name,
               last_name: data[0].last_name,
               dni: data[0].dni,
               token,
-            }
-          })
+            },
+          });
           navigate("/pump");
         }
         resetForm();

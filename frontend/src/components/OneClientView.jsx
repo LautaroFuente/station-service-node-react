@@ -8,6 +8,7 @@ import ErrorMessage from "./ErrorMessage";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function OneClientView() {
   const { stateEmployed } = useContext(EmployedContext);
@@ -34,10 +35,10 @@ function OneClientView() {
 
   const fetchOneClient = async () => {
     try {
-      const data = fetchGeneric( `http://localhost:3000/server/purchases/client/${dni}`, "GET", {
+      const data = fetchGeneric(`${apiUrl}/purchases/client/${dni}`, "GET", {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      } )
+      });
       setClientData(data);
     } catch (error) {
       console.log(`Error al traer las compras del cliente, error: ${error} `);

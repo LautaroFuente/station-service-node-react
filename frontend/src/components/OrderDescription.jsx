@@ -11,6 +11,8 @@ import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function OrderDescription() {
   const { statePurchase, dispatchPurchase } = useContext(PurchaseContext);
   const { stateClient, dispatchClient } = useContext(ClientContext);
@@ -30,7 +32,7 @@ function OrderDescription() {
 
     try {
       const data = await fetchGeneric(
-        "http://localhost:3000/server/purchases/",
+        `${apiUrl}/purchases/`,
         "POST",
         {
           "Content-Type": "application/json",

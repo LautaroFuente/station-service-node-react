@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
-
-const urlAllPurchases = "http://localhost:3000/server/purchases/";
+const apiUrl = import.meta.env.VITE_API_URL;
+const urlAllPurchases = `${apiUrl}/purchases/`;
 
 function AllPurchaseView({ token, setError }) {
   const [purchases, setPurchases] = useState([]);

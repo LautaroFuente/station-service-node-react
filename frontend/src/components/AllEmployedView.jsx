@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
-
-const urlAllEmployed = "http://localhost:3000/server/employeds/"
+const apiUrl = import.meta.env.VITE_API_URL;
+const urlAllEmployed = `${apiUrl}/employeds/`;
 
 function AllEmployedView({ token, setError }) {
   const [employed, setEmployed] = useState([]);

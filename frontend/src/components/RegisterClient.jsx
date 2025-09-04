@@ -12,6 +12,7 @@ const initialForm = {
   dni: "",
   age: "",
 };
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function RegisterClient() {
   const [formErrorServer, setFormErrorServer] = useState("");
@@ -33,7 +34,7 @@ function RegisterClient() {
       try {
         console.log(`Validacion correcta`);
         const data = await fetchGeneric(
-          "http://localhost:3000/server/clients/",
+          `${apiUrl}/clients/`,
           "POST",
           {
             "Content-Type": "application/json",

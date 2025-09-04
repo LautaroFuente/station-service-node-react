@@ -11,8 +11,8 @@ const initialForm = {
   dni: "",
   employed_password: "",
 };
-
-const urlAddEmployed = "http://localhost:3000/server/employeds/";
+const apiUrl = import.meta.env.VITE_API_URL;
+const urlAddEmployed = `${apiUrl}/employeds/`;
 
 function AddEmployedForm({ token }) {
   const [formErrorServer, setFormErrorServer] = useState("");

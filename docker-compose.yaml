@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: station-service-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./docker/mysql/initdb:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+
+  backend:
+    build: ./backend
+    container_name: station-service-backend
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    container_name: station-service-frontend
+    restart: always
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"

@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import { EmployedContext } from "../contexts/EmployedContext";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
-import { fetchGeneric  } from "../helpers/fetchGeneric";
+import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const dataForPage = 10;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function OneEmployedView() {
   const { stateEmployed } = useContext(EmployedContext);
@@ -34,13 +35,15 @@ function OneEmployedView() {
 
   const fetchOneEmployed = async () => {
     try {
-      const data = fetchGeneric( `http://localhost:3000/server/purchases/employed/${dni}`, "GET", {
+      const data = fetchGeneric(`${apiUrl}/purchases/employed/${dni}`, "GET", {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      } );
+      });
       setEmployedData(data);
     } catch (error) {
-      console.log(`Error al traer las compras a cargo del empleado , error: ${error} `);
+      console.log(
+        `Error al traer las compras a cargo del empleado , error: ${error} `
+      );
       setErrorDataEmployed(true);
     }
   };

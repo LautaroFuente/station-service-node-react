@@ -8,6 +8,7 @@ import { validateLoguinEmployedData } from "../helpers/validateFormData";
 import { fetchGeneric } from "../helpers/fetchGeneric";
 
 const initialForm = { dni: "", employed_password: "" };
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function LoginEmployed() {
   const [formErrorServer, setFormErrorServer] = useState(false);
@@ -40,9 +41,14 @@ function LoginEmployed() {
     if (result.success) {
       try {
         console.log(`Validacion correcta`);
-        const response = await fetchGeneric("http://localhost:3000/server/auth/login-employed", "POST", {
-          "Content-Type": "application/json",
-        }, JSON.stringify(form));
+        const response = await fetchGeneric(
+          `${apiUrl}/auth/login-employed`,
+          "POST",
+          {
+            "Content-Type": "application/json",
+          },
+          JSON.stringify(form)
+        );
 
         if (response == null) {
           throw new Error("Error al iniciar sesion");
@@ -61,7 +67,7 @@ function LoginEmployed() {
               last_name: data[0].last_name,
               dni: data[0].dni,
               token,
-            }
+            },
           });
           navigate("/employed-dashboard");
         }
