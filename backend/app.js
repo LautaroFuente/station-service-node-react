@@ -15,7 +15,7 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+//app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.use(express.json());
 
@@ -26,8 +26,8 @@ app.use("/server/purchases", purchaseRoutes);
 app.use("/server/clients", clientRoutes);
 app.use("/server/employeds", employedRoutes);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-});
+//app.get("*", (req, res) => {
+//  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+//});
 
 export default app;
