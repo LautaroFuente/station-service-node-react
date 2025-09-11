@@ -1,10 +1,10 @@
-import { connection } from "../configuration/db.js";
+import pool from "../configuration/db.js";
 import bcrypt from "bcrypt";
 
 const employeds = {
   getAllEmployeds: async () => {
     try {
-      const [result] = await connection.query(
+      const [result] = await pool.query(
         "SELECT employed_id, last_name, name, dni FROM employeds e ORDER BY last_name;"
       );
       return result;
@@ -18,7 +18,7 @@ const employeds = {
     try {
       const query =
         "SELECT employed_id, last_name, name, dni FROM employeds e WHERE dni = ?;";
-      const [result] = await connection.execute(query, [dni]);
+      const [result] = await pool.execute(query, [dni]);
       return result;
     } catch {
       console.log(err);
@@ -29,7 +29,7 @@ const employeds = {
   getOneEmployedPass: async (dni) => {
     try {
       const query = "SELECT employed_password FROM employeds e WHERE dni = ?;";
-      const [result] = await connection.execute(query, [dni]);
+      const [result] = await pool.execute(query, [dni]);
       return result;
     } catch {
       console.log(err);
@@ -47,7 +47,7 @@ const employeds = {
 
       const query =
         "INSERT INTO employeds(employed_id, name, last_name, dni, employed_password) values (0, ?, ?, ?, ?);";
-      const [result] = await connection.execute(query, [
+      const [result] = await pool.execute(query, [
         employed.name,
         employed.last_name,
         employed.dni,
@@ -61,7 +61,6 @@ const employeds = {
       throw new Error("Error al agregar un cliente");
     }
   },
-
 };
 
 export default employeds;
