@@ -20,7 +20,7 @@ services:
     container_name: station-service-backend
     restart: always
     env_file:
-      - .env
+      - ./backend/.env
     depends_on:
       - db
     ports:

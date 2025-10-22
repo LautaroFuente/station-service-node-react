@@ -26,7 +26,10 @@ export const loginClient = async (req, res) => {
       let data = await clients.getOneClient(dni);
 
       if (data.length > 0) {
-        const token = jwt.sign({ dni }, process.env.JWT_KEY, {
+        if (!process.env.JWT_SECRET) {
+          throw new Error("JWT_SECRET no esta definida");
+        }
+        const token = jwt.sign({ dni }, process.env.JWT_SECRET, {
           expiresIn: "30m",
         });
         console.log(data);
@@ -64,7 +67,10 @@ export const loginEmployed = async (req, res) => {
 
       if (match) {
         data = await employeds.getOneEmployed(dni);
-        const token = jwt.sign({ dni }, process.env.JWT_KEY, {
+        if (!process.env.JWT_SECRET) {
+          throw new Error("JWT_SECRET no esta definida");
+        }
+        const token = jwt.sign({ dni }, process.env.JWT_SECRET, {
           expiresIn: "30m",
         });
         res.status(200).json({ token, data });
