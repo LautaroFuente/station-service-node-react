@@ -13,7 +13,7 @@ const checkToken = (req, res, next) => {
   }
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_KEY);
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
 
     req.client = verified;
 
