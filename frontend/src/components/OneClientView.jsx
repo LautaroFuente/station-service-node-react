@@ -35,11 +35,16 @@ function OneClientView() {
 
   const fetchOneClient = async () => {
     try {
-      const data = fetchGeneric(`${apiUrl}/purchases/client/${dni}`, "GET", {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      });
-      setClientData(data);
+      const data = await fetchGeneric(
+        `${apiUrl}/purchases/client/${dni}`,
+        "GET",
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      console.log(data);
+      setClientData(data || []);
     } catch (error) {
       console.log(`Error al traer las compras del cliente, error: ${error} `);
       setErrorDataClient(true);
@@ -68,7 +73,7 @@ function OneClientView() {
               {clientData.map((purchase, index) => {
                 return (
                   <div
-                    key={{ index }}
+                    key={index}
                     style={{
                       display: "flex",
                       justifyContent: "space-around",

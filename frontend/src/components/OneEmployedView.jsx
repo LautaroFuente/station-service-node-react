@@ -35,11 +35,16 @@ function OneEmployedView() {
 
   const fetchOneEmployed = async () => {
     try {
-      const data = fetchGeneric(`${apiUrl}/purchases/employed/${dni}`, "GET", {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      });
-      setEmployedData(data);
+      const data = await fetchGeneric(
+        `${apiUrl}/purchases/employed/${dni}`,
+        "GET",
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      console.log(data);
+      setEmployedData(data || []);
     } catch (error) {
       console.log(
         `Error al traer las compras a cargo del empleado , error: ${error} `
@@ -72,7 +77,7 @@ function OneEmployedView() {
               {employedData.map((purchase, index) => {
                 return (
                   <div
-                    key={{ index }}
+                    key={index}
                     style={{
                       display: "flex",
                       justifyContent: "space-around",
