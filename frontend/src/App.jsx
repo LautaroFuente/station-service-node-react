@@ -15,12 +15,13 @@ import { PurchaseProvider } from "./contexts/PurchaseContext";
 import { EmployedProvider } from "./contexts/EmployedContext";
 import OneClientView from "./components/OneClientView";
 import OneEmployedView from "./components/OneEmployedView";
+import favicon from "./img/favicon.png";
 
 function App() {
   return (
     <>
       <div className="header">
-        <img src="./src/img/favicon.png" alt="logo de estacion de servicio" />
+        <img src={favicon} alt="logo de estacion de servicio" />
         <h2>Estación LF</h2>
       </div>
       <EmployedProvider>
