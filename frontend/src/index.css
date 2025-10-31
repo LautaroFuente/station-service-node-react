@@ -33,9 +33,10 @@ a {
   max-width: 300px;
   height: 2rem;
   font-size: 1.3rem;
-  border: solid 2px rgb(27 36 83);
-  background-color: rgb(59 72 249);
+  border: solid 2px rgb(0 0 0);
+  background-color: #12186d;
   color: #f7f3f3;
+  border-radius: 6px;
 }
 
 .btn-back-home:hover,
@@ -53,6 +54,11 @@ a {
   position: absolute;
   bottom: 2rem;
   color: #fbfbfb;
+}
+
+button .submit {
+  font-weight: 600;
+  font-variant: all-small-caps;
 }
 
 .container-content {
@@ -100,8 +106,14 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  background-color: rgb(59 72 249);
+  gap: 1rem;
+  background: #b0bef7;
+  background: linear-gradient(
+    90deg,
+    rgba(176, 190, 247, 1) 0%,
+    rgba(98, 127, 217, 1) 48%,
+    rgba(57, 75, 179, 1) 73%
+  );
   color: rgb(255, 255, 255);
   max-width: 900px;
   min-width: 200px;
@@ -109,6 +121,7 @@ form {
   margin: 3rem auto;
   padding: 2rem 0;
   border: solid 2px rgb(93 93 93);
+  border-radius: 12px;
 }
 
 form div {
@@ -140,6 +153,10 @@ form .submit {
   height: 2rem;
   font-size: 1.3rem;
   border: solid 2px rgb(93 93 93);
+}
+
+button.submit {
+  margin-top: 1rem;
 }
 
 form .submit:hover {

@@ -20,9 +20,12 @@ import favicon from "./img/favicon.png";
 function App() {
   return (
     <>
-      <div className="header">
-        <img src={favicon} alt="logo de estacion de servicio" />
-        <h2>Estación LF</h2>
+      <div className="home-header">
+        <img
+          className="home-logo"
+          src={favicon}
+          alt="logo de estacion de servicio"
+        />
       </div>
       <EmployedProvider>
         <ClientProvider>

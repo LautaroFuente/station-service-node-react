@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --background: #f9fafb;
+  --text-dark: #111827;
+  --accent: #dc2626;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+}
+
+/* --- CONTAINER --- */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}
+
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  animation: fadeIn 0.8s ease;
+}
+
+/* --- BUTTONS --- */
+.home-btn {
+  width: 320px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+}
+
+.home-btn:hover {
+  transform: translateY(-4px);
+  background-color: var(--primary-dark);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.home-btn-text h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.home-btn-text p {
+  font-size: 0.95rem;
+  margin: 0.4rem 0 0;
+}
+
+.home-btn-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* --- RED BUTTON --- */
+.home-btn-red {
+  background-color: white;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.home-btn-red:hover {
+  background-color: var(--accent);
+  color: white;
+}
+
+.home-red-icon {
+  width: 50px;
+  height: 50px;
+  margin-top: 0.5rem;
+}
+
+/* --- ANIMATION --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

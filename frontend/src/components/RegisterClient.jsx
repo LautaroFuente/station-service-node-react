@@ -73,7 +73,6 @@ function RegisterClient() {
 
   return (
     <>
-      <h1>¡REGISTRATE!</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nombre:</label>

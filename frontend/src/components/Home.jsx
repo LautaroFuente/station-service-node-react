@@ -1,6 +1,7 @@
 import cursor from "../img/cursor.png";
 import red_button from "../img/red-button.png";
 import { NavLink, useNavigate } from "react-router-dom";
+import "../styles/Home.css";
 
 function Home() {
   const navigate = useNavigate();
@@ -10,49 +11,38 @@ function Home() {
   };
 
   return (
-    <>
-      <div className="container-content">
+    <div className="home-container">
+      <main className="home-content">
         <button
-          className="btn"
+          className="home-btn"
           onClick={() => handleClickNavigate("/register-client")}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <h2>Cliente Nuevo?</h2>
-            <p>Pulsa aquí!</p>
+          <div className="home-btn-text">
+            <h2>¿Cliente Nuevo?</h2>
+            <p>Pulsa aquí</p>
           </div>
-          <img src={cursor} alt="icono de cursor" />
+          <img src={cursor} alt="cursor icon" className="home-btn-icon" />
         </button>
+
         <button
-          className="btn"
+          className="home-btn"
           onClick={() => handleClickNavigate("/login-client")}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <h2>Ya sos Cliente?</h2>
-            <p>Pulsa aquí!</p>
+          <div className="home-btn-text">
+            <h2>¿Ya sos Cliente?</h2>
+            <p>Pulsa aquí</p>
           </div>
-          <img src={cursor} alt="icono de cursor" />
+          <img src={cursor} alt="cursor icon" className="home-btn-icon" />
         </button>
 
         <NavLink to={"/login-employed"} style={{ display: "contents" }}>
-          <button className="btn btn-red">
+          <button className="home-btn home-btn-red">
             <h4>Identificarse como empleado</h4>
-            <img src={red_button} alt="icono de boton rojo" />
+            <img src={red_button} alt="botón rojo" className="home-red-icon" />
           </button>
         </NavLink>
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
 

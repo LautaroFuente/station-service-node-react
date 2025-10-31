@@ -2,6 +2,7 @@ html {
   box-sizing: border-box;
   font-size: 16px;
   scroll-behavior: smooth;
+  font-family: "Poppins", "Roboto", sans-serif;
 }
 
 *,
@@ -22,4 +23,20 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+.home-header {
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.home-logo {
+  height: 230px;
+}
+
+.home-header h1 {
+  margin-top: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
 }
