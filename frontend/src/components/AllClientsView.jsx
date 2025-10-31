@@ -83,26 +83,34 @@ function AllClientsView({ token, setError }) {
       {currentData.length > 0 &&
         currentData.map((client) => {
           return (
-            <div
-              key={client.dni}
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                border: "solid 2px black",
-              }}
-            >
-              <h4>{`Cliente: ${client.client_id}`}</h4>
-              <h4>{`Apellido: ${client.last_name}`}</h4>
-              <h4>{`Nombre: ${client.name}`}</h4>
-              <h4>{`DNI: ${client.dni}`}</h4>
-              <h4>{`Edad: ${client.age}`}</h4>
-              <button onClick={() => handleClickViewPurchases(client.dni)}>
+            <div key={client.dni} className="data-card">
+              <div className="data-info">
+                <p>
+                  <strong>ID:</strong> {client.client_id}
+                </p>
+                <p>
+                  <strong>Apellido:</strong> {client.last_name}
+                </p>
+                <p>
+                  <strong>Nombre:</strong> {client.name}
+                </p>
+                <p>
+                  <strong>DNI:</strong> {client.dni}
+                </p>
+                <p>
+                  <strong>Edad:</strong> {client.age}
+                </p>
+              </div>
+              <button
+                className="data-btn"
+                onClick={() => handleClickViewPurchases(client.dni)}
+              >
                 Ver Compras
               </button>
             </div>
           );
         })}
+
       <div>
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
           Anterior

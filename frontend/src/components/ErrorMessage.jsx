@@ -1,7 +1,10 @@
 function ErrorMessage({ message }) {
   return (
     <div className="container-error">
-      <h3 style={{ textAlign: "center" }}>{message}</h3>
+      <span role="img" aria-label="error" style={{ marginRight: "0.5rem" }}>
+        ❌
+      </span>
+      <h3>{message}</h3>
     </div>
   );
 }

@@ -72,26 +72,35 @@ function OneClientView() {
             <div>
               {clientData.map((purchase, index) => {
                 return (
-                  <div
-                    key={index}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                      border: "solid 2px black",
-                    }}
-                  >
-                    <h4>{`Apellido: ${purchase.last_name}`}</h4>
-                    <h4>{`Nombre: ${purchase.name}`}</h4>
-                    <h4>{`Fecha: ${purchase.purchase_date}`}</h4>
-                    <h4>{`Total: ${purchase.total_amount}`}</h4>
-                    <h4>{`Descripcion: ${purchase.description}`}</h4>
+                  <div key={index} className="data-card">
+                    <div className="data-info">
+                      <p>
+                        <strong>Apellido:</strong> {purchase.last_name}
+                      </p>
+                      <p>
+                        <strong>Nombre:</strong> {purchase.name}
+                      </p>
+                      <p>
+                        <strong>Fecha:</strong> {purchase.purchase_date}
+                      </p>
+                      <p>
+                        <strong>Total:</strong> {purchase.total_amount}
+                      </p>
+                      <p>
+                        <strong>Descripción:</strong> {purchase.description}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
             </div>
           )}
-          <div>
+          <div
+            style="
+    display: flex;
+    justify-content: center;
+"
+          >
             <button onClick={handlePrevPage} disabled={currentPage === 0}>
               Anterior
             </button>
@@ -102,7 +111,12 @@ function OneClientView() {
               Siguiente
             </button>
           </div>
-          <p>
+          <p
+            style="
+    display: flex;
+    justify-content: center;
+"
+          >
             Pagina {currentPage + 1} de {totalPages}
           </p>
           <div className="container-content">

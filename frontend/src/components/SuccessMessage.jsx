@@ -1,7 +1,10 @@
 function SuccessMessage({ message }) {
   return (
     <div className="container-success">
-      <h3 style={{ textAlign: "center" }}>{message}</h3>
+      <span role="img" aria-label="success" style={{ marginRight: "0.5rem" }}>
+        ✅
+      </span>
+      <h3>{message}</h3>
     </div>
   );
 }

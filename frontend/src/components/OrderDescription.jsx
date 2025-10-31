@@ -96,7 +96,7 @@ function OrderDescription() {
               </div>
             </div>
           </div>
-          <h2>{`${statePurchase.description.total} a nombre de ${name} ${last_name}`}</h2>
+          <h2>{`${statePurchase.description.total}$ a nombre de ${name} ${last_name}`}</h2>
           {formErrorServer && (
             <ErrorMessage message="Error con el servidor"></ErrorMessage>
           )}

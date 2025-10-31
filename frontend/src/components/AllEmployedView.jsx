@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchGeneric } from "../helpers/fetchGeneric";
+import "../styles/TableCards.css";
 
 const dataForPage = 10;
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -81,27 +82,31 @@ function AllEmployedView({ token, setError }) {
         />
       </div>
       {currentData.length > 0 &&
-        currentData.map((employed) => {
-          return (
-            <div
-              key={employed.dni}
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                border: "solid 2px black",
-              }}
-            >
-              <h4>{`Empleado: ${employed.employed_id}`}</h4>
-              <h4>{`Apellido: ${employed.last_name}`}</h4>
-              <h4>{`Nombre: ${employed.name}`}</h4>
-              <h4>{`DNI: ${employed.dni}`}</h4>
-              <button onClick={() => handleClickViewPurchases(employed.dni)}>
-                Ver Compras
-              </button>
+        currentData.map((employed) => (
+          <div key={employed.dni} className="data-card">
+            <div className="data-info">
+              <p>
+                <strong>ID:</strong> {employed.employed_id}
+              </p>
+              <p>
+                <strong>Apellido:</strong> {employed.last_name}
+              </p>
+              <p>
+                <strong>Nombre:</strong> {employed.name}
+              </p>
+              <p>
+                <strong>DNI:</strong> {employed.dni}
+              </p>
             </div>
-          );
-        })}
+            <button
+              className="data-btn"
+              onClick={() => handleClickViewPurchases(employed.dni)}
+            >
+              Ver Compras
+            </button>
+          </div>
+        ))}
+
       <div>
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
           Anterior

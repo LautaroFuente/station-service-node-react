@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { EmployedContext } from "../contexts/EmployedContext";
-import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import AllClientsView from "./AllClientsView";
 import AllEmployedView from "./AllEmployedView";
@@ -54,8 +53,9 @@ function EmployedDashboard() {
   return (
     <>
       {token ? (
-        <div>
-          <h1>Panel Empleados</h1>
+        <div className="dashboard-container">
+          <h1 className="dashboard-title">Panel de Empleados</h1>
+
           <ul className="panel">
             <li className="panel-item">
               <button onClick={handleViewAddEmployed}>Alta de Empleado</button>
@@ -70,6 +70,7 @@ function EmployedDashboard() {
               <button onClick={handleViewPurchase}>Ver Compras</button>
             </li>
           </ul>
+
           {viewClients && <AllClientsView token={token} setError={setError} />}
           {viewEmployed && (
             <AllEmployedView token={token} setError={setError} />
@@ -80,16 +81,17 @@ function EmployedDashboard() {
           {viewAddEmployed && (
             <AddEmployedForm token={token} setError={setError} />
           )}
-          {error.state && <ErrorMessage message={error.message}></ErrorMessage>}
+          {error.state && <ErrorMessage message={error.message} />}
+
           <div className="container-content">
             <button className="btn-back-home" onClick={handleLogout}>
-              Cerrar sesion
+              Cerrar sesión
             </button>
           </div>
         </div>
       ) : (
-        <div>
-          <h1>Debes iniciar sesion</h1>
+        <div className="dashboard-container">
+          <h1 className="dashboard-title">Debes iniciar sesión</h1>
           <div className="container-content">
             <NavLink to={"/"}>
               <button className="btn-back-home">Volver al inicio</button>

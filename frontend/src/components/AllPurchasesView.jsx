@@ -92,24 +92,24 @@ function AllPurchaseView({ token, setError }) {
           </div>
         </div>
       </div>
-      {currentData.length > 0 &&
-        currentData.map((purchases, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                border: "solid 2px black",
-              }}
-            >
-              <h4>{`Fecha: ${purchases.purchase_date}`}</h4>
-              <h4>{`Monto: ${purchases.total_amount}`}</h4>
-              <h4>{`Descripcion: ${purchases.description}`}</h4>
+      {currentData.map((purchases, index) => {
+        return (
+          <div key={index} className="data-card">
+            <div className="data-info">
+              <p>
+                <strong>Fecha:</strong> {purchases.purchase_date}
+              </p>
+              <p>
+                <strong>Monto:</strong> {purchases.total_amount}
+              </p>
+              <p>
+                <strong>Descripción:</strong> {purchases.description}
+              </p>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
+
       <div>
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
           Anterior
