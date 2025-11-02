@@ -60,3 +60,13 @@ From the root folder, start the containers:
 ```bash
 docker compose up --build
 ```
+
+## 🧰 Tech Stack
+
+#### Frontend React, Nginx
+
+#### Backend Node, Express
+
+#### Database MySQL 8
+
+#### DevOps Docker, Docker Compose
